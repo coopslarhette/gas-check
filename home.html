@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple Map</title>
+  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="home-css.css">
+</head>
+
+<body>
+  <div class="container" id="container">
+    <div class="row">
+      <div id="map" class="col-5" style="border: 1px solid black">
+        <!-- map -->
+
+      </div>
+      <div class="col-7" style="border: 1px solid black">
+        <div class="row">
+          <div class="col" style="border: 1px solid black">
+            <!-- start dest -->
+            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+              <input type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="col" style="border: 1px solid black">
+            <!-- end dest -->
+            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+              <input type="text" placeholder="Destination" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+        </div>
+        <div class="row" style="border: 1px solid black">
+          <div class="col" style="border: 1px solid black">
+            <!-- mpg -->
+            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+              <input type="text" placeholder="Your car's MPG" class="form-control" aria-label="Your car's MPG" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="col" style="border: 1px solid black">
+            <!-- cost/gal -->
+            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+              <input type="text" placeholder="Cost of a gallon of gas near you" class="form-control" aria-label="Cost of a gallon of gas near you" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+        </div>
+        <div id="compute" class="row" style="border: 1px solid black">
+          <!-- compute -->
+          <div class="col" style="border: 1px solid black">
+            <button type="button" class="btn btn-success btn-lg">Compute Cost</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <script defer type="text/javascript" src="home.js"></script>
+  <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg&callback=initMap"></script>
+</body>
+
+</html>
