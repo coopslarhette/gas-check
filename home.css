@@ -1,8 +1,5 @@
 /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
-#map {
-  height: 200px;
-}
 
 /* Optional: Makes the sample page fill the window. */
 html,
@@ -34,10 +31,10 @@ body {
     display: flex;
   }
 
-  #map {
-    width: 200px;
-  }
+}
 
+#map {
+  height: 300px;
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
