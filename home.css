@@ -1,12 +1,19 @@
 /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
-
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+.navbar {
+  border-radius: 8px;
+}
+
+#map {
+  height: 200px;
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -31,10 +38,9 @@ body {
     display: flex;
   }
 
-}
-
-#map {
-  height: 300px;
+  #map {
+    height: 300px;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
