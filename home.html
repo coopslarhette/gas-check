@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Gas Check</title>
+  <title>Gastimator</title>
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -10,17 +10,12 @@
 </head>
 
 <body>
-
+  <nav class="navbar navbar-light bg-info">
+    <a class="navbar-brand" href="file:///Users/coopslarhette/CS/gas-check/home.html">Gas Check</a>
+    <a href="https://github.com/coopslarhette" class="navbar-left"><img id="github-logo" src="img/github-logo.png"></a>
+  </nav>
   <div class="container" id="container">
-    <nav class="navbar navbar-light bg-info">
-      <a class="navbar-brand" href="file:///Users/coopslarhette/CS/gas-check/home.html">Gas Check</a>
-    </nav>
     <div id="flex">
-      <div class="col-5">
-        <!-- map style="border: 1px solid black" -->
-        <div id="map">
-        </div>
-      </div>
       <div id="info" class="col-7">
         <div class="row">
           <div class="col">
@@ -46,7 +41,7 @@
           <div class="col">
             <!-- cost/gal -->
             <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input type="text" placeholder="Cost of a gallon of gas near you" class="form-control" aria-label="Cost of a gallon of gas near you" aria-describedby="inputGroup-sizing-sm">
+              <input type="text" placeholder="Cost of a gal of gas" class="form-control" aria-label="Cost of a gallon of gas near you" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
         </div>
@@ -55,6 +50,11 @@
           <div class="col">
             <button type="button" class="btn btn-success btn-lg">Compute Cost</button>
           </div>
+        </div>
+      </div>
+      <div class="col-5" style="padding-left: 0; padding-right: 0">
+        <!-- map style="border: 1px solid black" -->
+        <div id="map">
         </div>
       </div>
     </div>

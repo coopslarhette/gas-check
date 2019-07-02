@@ -17,6 +17,21 @@ body {
   height: 200px;
 }
 
+#compute {
+  text-align: center;
+  display: block;
+}
+
+@media (max-width: 575.98px) {
+  .col-5, .col-7 {
+    max-width: 100%;
+  }
+}
+
+#github-logo {
+  max-height: 40px;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {}
 
@@ -25,10 +40,6 @@ body {
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-  #compute {
-    text-align: center;
-    display: block;
-  }
 
   .btn {
     margin-top: 10px;
