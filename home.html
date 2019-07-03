@@ -24,13 +24,13 @@
           <div class="col">
             <!-- start dest -->
             <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point" aria-describedby="inputGroup-sizing-sm">
+              <input id="origin" type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
           <div class="col">
             <!-- end dest -->
             <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input type="text" placeholder="Destination" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              <input id="destination" type="text" placeholder="Destination" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@
         <div id="compute" class="row">
           <!-- compute -->
           <div class="col">
-            <button type="button" class="btn btn-success btn-lg">Compute Cost</button>
+            <button onclick="computeCost()" type="button" class="btn btn-success btn-lg">Compute Cost</button>
           </div>
         </div>
       </div>
@@ -61,9 +61,6 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
 
   <script defer type="text/javascript" src="home.js"></script>
