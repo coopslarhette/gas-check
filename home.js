@@ -31,9 +31,15 @@ function callback(response, status) {
     var destinations = response.destinationAddresses;
     var results = response.rows[0].elements;
     var element = results[0];
-    var distance = element.distance.text;
+    var distance = parseInt(element.distance.text);
     var duration = element.duration.text;
-    alert("dist: " + distance + ", duration: " + duration);
+    var mpg = parseInt(document.getElementById('mpg').value);
+    var galCost = parseInt(document.getElementById('gallon-cost').value);
+    var totalCost = distance / mpg * galCost;
+    alert(distance);
+    alert(mpg);
+    alert(distance / mpg);
+    alert("Cost of the trip: " + totalCost);
   } else {
     alert("error message: " + status);
   }
