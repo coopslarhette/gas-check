@@ -36,10 +36,17 @@ function callback(response, status) {
     var mpg = parseInt(document.getElementById('mpg').value);
     var galCost = parseInt(document.getElementById('gallon-cost').value);
     var totalCost = distance / mpg * galCost;
-    alert(distance);
-    alert(mpg);
-    alert(distance / mpg);
-    alert("Cost of the trip: " + totalCost);
+    alert("Cost of the trip: $" + totalCost);
+    var div = document.createElement("div");
+    var h4 = document.createElement("h4");
+    var msg = "Your trip will approximately cost: $" + distance;
+    alert(msg);
+    div.className = "alert alert-success";
+    div.id = "result";
+    h4.textContent = msg;
+    s
+
+    document.getElementById("compute").appendChild(div);
   } else {
     alert("error message: " + status);
   }
