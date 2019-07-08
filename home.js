@@ -36,15 +36,26 @@ function callback(response, status) {
     var mpg = parseInt(document.getElementById('mpg').value);
     var galCost = parseInt(document.getElementById('gallon-cost').value);
     var totalCost = distance / mpg * galCost;
-    alert("Cost of the trip: $" + totalCost);
+    if (totalCost < 1) {
+      totalCost = 1;
+    } else {
+      totalCost = totalCost.toFixed(0);
+    }
     var div = document.createElement("div");
     var h4 = document.createElement("h4");
-    var msg = "Your trip will approximately cost: $" + distance;
-    alert(msg);
+    var msg = "Your trip will use approximately $" + totalCost +
+      " worth of gas.";
+    try {
+      var previousResult = document.getElementById('result');
+      previousResult.parentNode.removeChild(previousResult);
+    } catch (err) {}
     div.className = "alert alert-success";
     div.id = "result";
+    div.style.marginTop = "10px";
+    div.style.border = "1px solid black";
     h4.textContent = msg;
-    s
+    document.getElementById('compute').appendChild(div);
+    document.getElementById('result').appendChild(h4);
 
     document.getElementById("compute").appendChild(div);
   } else {
