@@ -1,6 +1,5 @@
 /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
-
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
@@ -36,11 +35,7 @@ body {
 @media (min-width: 576px) {}
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {}
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-
+@media (min-width: 768px) {
   .btn {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -53,7 +48,16 @@ body {
   #map {
     height: 300px;
   }
+
+  /* #info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  } */
 }
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {}
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {}
