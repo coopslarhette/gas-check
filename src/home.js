@@ -51,7 +51,7 @@ function callback(response, status) {
     } catch (err) {}
     div.className = "alert alert-success";
     div.id = "result";
-    div.style.marginTop = "10px";
+    div.style.marginTop = "13px";
     div.style.border = "1px solid black";
     h4.textContent = msg;
     document.getElementById('compute').appendChild(div);
