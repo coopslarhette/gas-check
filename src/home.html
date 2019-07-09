@@ -19,40 +19,41 @@
       <a href="https://github.com/coopslarhette" class="navbar-left"><img id="github-logo" src="../img/github-logo.png"></a>
     </nav>
     <div id="flex">
-      <div id="info" class="col-7" style="border: 1px solid black;">
-
-
-        <div class="row" style="border: 1px solid black;">
-          <div class="col" style="border: 1px solid black;">
-            <!-- start dest -->
-            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input id="origin" type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point" aria-describedby="inputGroup-sizing-sm">
+      <div id="info" class="col-7">
+        <div id="flex">
+          <div id="left-col" class="col" style="margin-right: 10px;">
+            <div class="row">
+              <!-- start dest -->
+              <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+                <input id="origin" type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point" aria-describedby="inputGroup-sizing-sm">
+              </div>
             </div>
+            <div class="row">
+              <!-- mpg -->
+              <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+                <input id="mpg" type="text" placeholder="Your car's MPG" class="form-control" aria-label="Your car's MPG" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+
           </div>
-          <div class="col" style="border: 1px solid black;">
+          <div id="right-col" class="col">
             <!-- end dest -->
-            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input id="destination" type="text" placeholder="Destination" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            <div class="row">
+              <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+                <input id="destination" type="text" placeholder="Destination" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+            <div class="row">
+              <!-- cost/gal -->
+              <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">$</span>
+                </div>
+                <input id="gallon-cost" type="text" placeholder="Cost of a gal of gas" class="form-control" aria-label="Cost of a gallon of gas near you" aria-describedby="inputGroup-sizing-sm">
+              </div>
             </div>
           </div>
         </div>
-
-
-        <div class="row" style="border: 1px solid black;">
-          <div class="col" style="border: 1px solid black;">
-            <!-- mpg -->
-            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input id="mpg" type="text" placeholder="Your car's MPG" class="form-control" aria-label="Your car's MPG" aria-describedby="inputGroup-sizing-sm">
-            </div>
-          </div>
-          <div class="col" style="border: 1px solid black;">
-            <!-- cost/gal -->
-            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input id="gallon-cost" type="text" placeholder="Cost of a gal of gas" class="form-control" aria-label="Cost of a gallon of gas near you" aria-describedby="inputGroup-sizing-sm">
-            </div>
-          </div>
-        </div>
-
 
         <div id="compute" class="row">
           <!-- compute -->
