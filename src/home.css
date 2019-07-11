@@ -21,9 +21,9 @@ body {
   display: block;
 }
 
-/* #info {
+#info {
   margin-bottom: 20px;
-} */
+}
 
 @media (max-width: 575.98px) {
   .col-5, .col-7 {
@@ -33,6 +33,10 @@ body {
 
 #github-logo {
   max-height: 40px;
+}
+
+#flex {
+  padding: 0;
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -50,19 +54,12 @@ body {
 
   #flex {
     display: flex;
+    padding: 0;
   }
 
   #map {
     height: 300px;
   }
-
-  /* #left-col {
-    margin-right: 10px;
-  }
-
-  #right-col {
-    margin-left: 10px;
-  } */
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
