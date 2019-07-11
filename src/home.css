@@ -35,6 +35,10 @@ body {
   max-height: 40px;
 }
 
+#flex {
+  padding: 0;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {}
 
@@ -50,18 +54,11 @@ body {
 
   #flex {
     display: flex;
+    padding: 0;
   }
 
   #map {
     height: 300px;
-  }
-
-  #left-col {
-    margin-right: 10px;
-  }
-
-  #right-col {
-    margin-left: 10px;
   }
 }
 
