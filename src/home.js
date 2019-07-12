@@ -12,9 +12,9 @@ function initMap() {
 
 
 function computeCost() {
-  var origin = document.getElementById('origin').value;
-  var destination = document.getElementById('destination').value;
-  var service = new google.maps.DistanceMatrixService();
+  let origin = document.getElementById('origin').value;
+  let destination = document.getElementById('destination').value;
+  let service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix({
     origins: [origin],
     destinations: [destination],
@@ -27,26 +27,26 @@ function computeCost() {
 
 function callback(response, status) {
   if (status == 'OK') {
-    var origins = response.originAddresses;
-    var destinations = response.destinationAddresses;
-    var results = response.rows[0].elements;
-    var element = results[0];
-    var distance = parseInt(element.distance.text);
-    var duration = element.duration.text;
-    var mpg = parseInt(document.getElementById('mpg').value);
-    var galCost = parseInt(document.getElementById('gallon-cost').value);
-    var totalCost = distance / mpg * galCost;
+    let origins = response.originAddresses;
+    let destinations = response.destinationAddresses;
+    let results = response.rows[0].elements;
+    let element = results[0];
+    let distance = parseInt(element.distance.text);
+    let duration = element.duration.text;
+    let mpg = parseInt(document.getElementById('mpg').value);
+    let galCost = parseInt(document.getElementById('gallon-cost').value);
+    let totalCost = distance / mpg * galCost;
     if (totalCost < 1) {
       totalCost = 1;
     } else {
       totalCost = totalCost.toFixed(0);
     }
-    var div = document.createElement("div");
-    var h4 = document.createElement("h4");
-    var msg = "Your trip will use approximately $" + totalCost +
+    let div = document.createElement("div");
+    let h4 = document.createElement("h4");
+    let msg = "Your trip will use approximately $" + totalCost +
       " worth of gas.";
     try {
-      var previousResult = document.getElementById('result');
+      let previousResult = document.getElementById('result');
       previousResult.parentNode.removeChild(previousResult);
     } catch (err) {}
     div.className = "alert alert-success";
