@@ -14,6 +14,9 @@ function initMap() {
   geocoder = new google.maps.Geocoder();
 }
 
+/*
+ *
+ */
 function drawMarker() {
   let originAddress = document.getElementById('origin').value;
   geocoder.geocode({
@@ -76,7 +79,7 @@ function callback(response, status) {
     let results = response.rows[0].elements;
     let element = results[0];
     let distance = parseInt(element.distance.text);
-    let duration = element.duration.text;
+    let duration = element.duration.text; //time
     let mpg = parseInt(document.getElementById('mpg').value);
     let galCost = parseInt(document.getElementById('gallon-cost').value);
     let totalCost = distance / mpg * galCost;
