@@ -1,4 +1,6 @@
 var map;
+var geocoder;
+var gMarkers = [];
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -8,12 +10,64 @@ function initMap() {
     },
     zoom: 3
   });
+  geocoder = new google.maps.Geocoder();
 }
 
+function drawMarker() {
+  var origin = document.getElementById('origin').value;
+  let originLatLng = geocode(origin);
+  var marker = new google.maps.Marker({
+    map: map,
+    position: originLatLng,
+  });
+  map.setCenter(originLatLng);
+  map.setZoom(16);
+  gMarkers.push(marker);
+  marker.setMap(map);
+}
+
+/*
+ * Geocodes address and then returns a LatLng object. Used for markers and direction service.
+ */
+function geocode(address) {
+  let originAddress = address;
+  geocoder.geocode({
+      'address': originAddress
+    },
+    function(results, status) {
+      if (status == 'OK') {
+        alert("geocode");
+        return results[0].geometry.location;
+      } else {
+        alert("geocode not working: " + status);
+        return null;
+      }
+    });
+}
+
+function drawPath() {
+  for (let i = 0; i < gMarkers.length - 1; i++) {
+    gMarkers[i].setMap(null);
+  }
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var directionsService = new google.maps.DirectionsService;
+  var start = document.getElementById('origin').value;
+  var end = document.getElementById('end').value;
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
 
 function computeCost() {
-  let origin = document.getElementById('origin').value;
-  let destination = document.getElementById('destination').value;
+  var origin = document.getElementById('origin').value;
+  var destination = document.getElementById('destination').value;
   let service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix({
     origins: [origin],
