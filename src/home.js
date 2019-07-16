@@ -1,4 +1,7 @@
 var map;
+var geocoder;
+var gMarkers = [];
+
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -8,12 +11,52 @@ function initMap() {
     },
     zoom: 3
   });
+  geocoder = new google.maps.Geocoder();
 }
 
+function drawMarker() {
+  let originAddress = document.getElementById('origin').value;
+  geocoder.geocode({
+      'address': originAddress
+    },
+    function(results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        map.setZoom(16);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+        gMarkers.push(marker);
+      } else {
+        alert(status);
+      }
+    });
+
+  marker.setMap(map);
+}
+
+function drawPath() {
+  for (let i = 0; i < gMarkers.length - 1; i++) {
+    gMarkers[i].setMap(null);
+  }
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var directionsService = new google.maps.DirectionsService;
+  var start = document.getElementById('origin').value;
+  var end = document.getElementById('end').value;
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
 
 function computeCost() {
-  let origin = document.getElementById('origin').value;
-  let destination = document.getElementById('destination').value;
   let service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix({
     origins: [origin],
