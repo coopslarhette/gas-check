@@ -28,9 +28,7 @@ function drawMarker() {
           position: results[0].geometry.location
         });
         gMarkers.push(marker);
-      } else {
-        alert(status);
-      }
+      } else {}
     });
 
   marker.setMap(map);
@@ -40,11 +38,12 @@ function drawPath() {
   for (let i = 0; i < gMarkers.length - 1; i++) {
     gMarkers[i].setMap(null);
   }
-  var directionsDisplay = new google.maps.DirectionsRenderer;
-  var directionsService = new google.maps.DirectionsService;
-  var start = document.getElementById('origin').value;
-  var end = document.getElementById('end').value;
-  var request = {
+  let directionsDisplay = new google.maps.DirectionsRenderer;
+  let directionsService = new google.maps.DirectionsService;
+  directionsDisplay.setMap(map);
+  let start = document.getElementById('origin').value;
+  let end = document.getElementById('destination').value;
+  let request = {
     origin: start,
     destination: end,
     travelMode: 'DRIVING'
@@ -57,6 +56,8 @@ function drawPath() {
 }
 
 function computeCost() {
+  let origin = document.getElementById('origin').value;
+  let destination = document.getElementById('destination').value;
   let service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix({
     origins: [origin],
