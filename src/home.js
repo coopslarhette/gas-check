@@ -1,5 +1,7 @@
 var map;
 var geocoder;
+var directionsDisplay;
+var directionsService;
 var gMarkers = [];
 var dirDisplayList = [];
 
@@ -12,6 +14,8 @@ function initMap() {
     zoom: 3
   });
   geocoder = new google.maps.Geocoder();
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  directionsService = new google.maps.DirectionsService;
 }
 
 /*
@@ -37,17 +41,15 @@ function drawMarker() {
   marker.setMap(map);
 }
 
-function drawPath() {
+function removeMarkers() {
   for (let i = 0; i < gMarkers.length - 1; i++) {
     gMarkers[i].setMap(null);
   }
-  for (let i = 0; i < dirDisplayList.length; i++) {
-    dirDisplayList[i].setMap(null);
-  }
-  let directionsDisplay = new google.maps.DirectionsRenderer;
-  let directionsService = new google.maps.DirectionsService;
+}
+
+function drawPath() { //current issue with this is nitpicking; it resets the route instead of
+  //setting a new one so the route color is slightly more transparent
   directionsDisplay.setMap(map);
-  dirDisplayList.push(directionsDisplay);
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
   let request = {
