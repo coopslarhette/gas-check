@@ -1,7 +1,7 @@
 var map;
 var geocoder;
 var gMarkers = [];
-
+var dirDisplayList = [];
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -41,9 +41,13 @@ function drawPath() {
   for (let i = 0; i < gMarkers.length - 1; i++) {
     gMarkers[i].setMap(null);
   }
+  for (let i = 0; i < dirDisplayList.length; i++) {
+    dirDisplayList[i].setMap(null);
+  }
   let directionsDisplay = new google.maps.DirectionsRenderer;
   let directionsService = new google.maps.DirectionsService;
   directionsDisplay.setMap(map);
+  dirDisplayList.push(directionsDisplay);
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
   let request = {
