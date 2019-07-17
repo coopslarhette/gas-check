@@ -5,6 +5,9 @@ var directionsService;
 var gMarkers = [];
 var dirDisplayList = [];
 
+/*
+ * Initializes map and API elements. Map is centered on US with a country wide zoom level.
+ */
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
@@ -16,10 +19,12 @@ function initMap() {
   geocoder = new google.maps.Geocoder();
   directionsDisplay = new google.maps.DirectionsRenderer;
   directionsService = new google.maps.DirectionsService;
+  directionsDisplay.setMap(map);
 }
 
 /*
- *
+ * Draws markers on map whenever there is a change in the start input box text to let user know
+ * that their input is valid.
  */
 function drawMarker() {
   let originAddress = document.getElementById('origin').value;
@@ -47,9 +52,14 @@ function removeMarkers() {
   }
 }
 
-function drawPath() { //current issue with this is nitpicking; it resets the route instead of
-  //setting a new one so the route color is slightly more transparent
-  directionsDisplay.setMap(map);
+/*
+ * Draws users route from origin to destination on map. Changes whenever there is a change in
+ * the text in the destination input box (similar to drawMarker).
+ *
+ * TODO: Current issue with this is nitpicking; it resets the route instead of setting a new one
+ * so the route color is slightly more transparent.
+ */
+function drawPath() {
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
   let request = {
@@ -80,6 +90,7 @@ function computeCost() {
 
 function callback(response, status) {
   if (status == 'OK') {
+    //calculation; TODO: model gas usage more accurately
     let origins = response.originAddresses;
     let destinations = response.destinationAddresses;
     let results = response.rows[0].elements;
@@ -94,6 +105,8 @@ function callback(response, status) {
     } else {
       totalCost = totalCost.toFixed(0);
     }
+
+    //response div creation
     let div = document.createElement("div");
     let h4 = document.createElement("h4");
     let msg = "Your trip will use approximately $" + totalCost +
@@ -109,7 +122,6 @@ function callback(response, status) {
     h4.textContent = msg;
     document.getElementById('compute').appendChild(div);
     document.getElementById('result').appendChild(h4);
-
     document.getElementById("compute").appendChild(div);
   } else {
     alert("error message: " + status);
