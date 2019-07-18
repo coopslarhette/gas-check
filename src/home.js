@@ -43,10 +43,12 @@ function drawMarker() {
       } else {}
     });
 
+  console.log("drawMarker called");
   marker.setMap(map);
 }
 
 function removeMarkers() {
+  console.log("removeMarker called");
   for (let i = 0; i < gMarkers.length - 1; i++) {
     gMarkers[i].setMap(null);
   }
@@ -69,6 +71,8 @@ function drawPath() {
   };
   directionsService.route(request, function(response, status) {
     if (status == 'OK') {
+      //removes the final marker so no overlap with route marker
+      gMarkers[gMarkers.length - 1].setMap(null);
       directionsDisplay.setDirections(response);
     }
   });
