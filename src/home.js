@@ -78,8 +78,10 @@ function drawPath() {
   directionsService.route(request, function(response, status) {
     if (status == 'OK') {
       //removes the final marker so no overlap with route marker
-      gMarkers[gMarkers.length - 1].setMap(null);
+      // gMarkers[gMarkers.length - 1].setMap(null);
       directionsDisplay.setDirections(response);
+    } else {
+      // alert(status);
     }
   });
 }

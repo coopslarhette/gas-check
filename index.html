@@ -29,13 +29,14 @@
               </div>
               <!-- oninput is resource intensive but it makes a better user
               experience by confirming their origin and destination quickly -->
-              <input id="origin" oninput="drawMarker()" onchange="removeMarkers()" type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point Input" aria-describedby="inputGroup-sizing-sm">
+              <!-- oninput="drawMarker()" onchange="removeMarkers()" -->
+              <input id="origin"  type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point Input" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
           <div class="col">
             <!-- end dest -->
             <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input id="destination" oninput="drawPath()" type="text" placeholder="Destination" class="form-control" aria-label="Ending Point Input" aria-describedby="inputGroup-sizing-sm">
+              <input id="destination" onchange="drawPath()" type="text" placeholder="Destination" class="form-control" aria-label="Ending Point Input" aria-describedby="inputGroup-sizing-sm">
               <div class="input-group-append">
                 <span class="input-group-text" id="basic-addon1">B</span>
               </div>
