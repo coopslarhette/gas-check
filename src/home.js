@@ -130,7 +130,9 @@ function callback(response, status) {
     div.className = "alert alert-success";
     div.id = "result";
     div.style.marginTop = "13px";
-    div.style.border = "1px solid black";
+    // div.style.border = "1px solid black";
+    div.style.width = "70%";
+    div.style.margin = "0 auto";
     h4.textContent = msg;
     document.getElementById('compute').appendChild(div);
     document.getElementById('result').appendChild(h4);
