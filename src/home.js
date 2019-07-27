@@ -67,9 +67,11 @@ function removeMarkers() {
  * TODO: Current issue with this is nitpicking; it resets the route instead of setting a new one
  * so the route color is slightly more transparent.
  */
-function drawPath() {
+function drawPath() { // issue here is all about finding the right event listener
+  console.log("drawPath");
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
+  console.log('d: ' + end + 'o: ' + start);
   let request = {
     origin: start,
     destination: end,
@@ -81,7 +83,7 @@ function drawPath() {
       // gMarkers[gMarkers.length - 1].setMap(null);
       directionsDisplay.setDirections(response);
     } else {
-      // alert(status);
+      console.log(status);
     }
   });
 }
