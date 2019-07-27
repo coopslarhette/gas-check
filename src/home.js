@@ -4,11 +4,15 @@ var directionsDisplay;
 var directionsService;
 var gMarkers = [];
 var dirDisplayList = [];
+var autocompleteOrigin;
+var autocompleteDest;
 
 /*
  * Initializes map and API elements. Map is centered on US with a country wide zoom level.
  */
 function initMap() {
+  var originInput = document.getElementById('origin');
+  var destInput = document.getElementById('destination');
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
       lat: 39.956813,
@@ -20,6 +24,8 @@ function initMap() {
   directionsDisplay = new google.maps.DirectionsRenderer;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay.setMap(map);
+  autocompleteOrigin = new google.maps.places.Autocomplete(originInput);
+  autocompleteDest = new google.maps.places.Autocomplete(destInput);
 }
 
 /*
