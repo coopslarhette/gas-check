@@ -3,7 +3,6 @@ var geocoder;
 var directionsDisplay;
 var directionsService;
 var gMarkers = [];
-var dirDisplayList = [];
 var autocompleteOrigin;
 var autocompleteDest;
 
@@ -32,37 +31,35 @@ function initMap() {
   });
 }
 
-/*
- * Draws markers on map whenever there is a change in the start input box text to let user know
- * that their input is valid.
- */
-function drawMarker() {
-  let originAddress = document.getElementById('origin').value;
-  geocoder.geocode({
-      'address': originAddress
-    },
-    function(results, status) {
-      if (status == 'OK') {
-        map.setCenter(results[0].geometry.location);
-        map.setZoom(16);
-        var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-        });
-        gMarkers.push(marker);
-      } else {}
-    });
-
-  console.log("drawMarker called");
-  marker.setMap(map);
-}
-
-function removeMarkers() {
-  console.log("removeMarker called");
-  for (let i = 0; i < gMarkers.length - 1; i++) {
-    gMarkers[i].setMap(null);
-  }
-}
+// /*
+//  * Draws markers on map whenever there is a change in the start input box text to let user know
+//  * that their input is valid.
+//  */
+// function drawMarker() {
+//   let originAddress = document.getElementById('origin').value;
+//   geocoder.geocode({
+//       'address': originAddress
+//     },
+//     function(results, status) {
+//       if (status == 'OK') {
+//         map.setCenter(results[0].geometry.location);
+//         map.setZoom(16);
+//         var marker = new google.maps.Marker({
+//           map: map,
+//           position: results[0].geometry.location
+//         });
+//         gMarkers.push(marker);
+//       } else {}
+//     });
+//   marker.setMap(map);
+// }
+//
+// function removeMarkers() {
+//   console.log("removeMarker called");
+//   for (let i = 0; i < gMarkers.length - 1; i++) {
+//     gMarkers[i].setMap(null);
+//   }
+// }
 
 /*
  * Draws users route from origin to destination on map. Changes whenever there is a change in
