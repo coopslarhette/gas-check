@@ -26,6 +26,10 @@ function initMap() {
   directionsDisplay.setMap(map);
   autocompleteOrigin = new google.maps.places.Autocomplete(originInput);
   autocompleteDest = new google.maps.places.Autocomplete(destInput);
+  google.maps.event.addListener(autocompleteDest, 'place_changed', function() {
+    // var place = autocompleteDest.getPlace();
+    drawPath(); //place.place_id
+  });
 }
 
 /*
@@ -66,12 +70,13 @@ function removeMarkers() {
  *
  * TODO: Current issue with this is nitpicking; it resets the route instead of setting a new one
  * so the route color is slightly more transparent.
- */
-function drawPath() { // issue here is all about finding the right event listener
-  console.log("drawPath");
+ */ //end
+function drawPath() { // issue here is all about finding the right event listener, maybe just
+  //gecode when this is called, fixes finding proper event listener issue
+  //for geocoding here, idea is to first try it without geocoding and then if it errors once,
+  //geocode, if it errors a second time throw an error
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
-  console.log('d: ' + end + 'o: ' + start);
   let request = {
     origin: start,
     destination: end,
@@ -83,7 +88,7 @@ function drawPath() { // issue here is all about finding the right event listene
       // gMarkers[gMarkers.length - 1].setMap(null);
       directionsDisplay.setDirections(response);
     } else {
-      console.log(status);
+      console.log("error: " + status);
     }
   });
 }
