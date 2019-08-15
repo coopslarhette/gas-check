@@ -18,6 +18,15 @@ function initMap() {
     },
     zoom: 3
   });
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      map.setCenter({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+      map.setZoom(6);
+    });
+  }
   geocoder = new google.maps.Geocoder();
   directionsDisplay = new google.maps.DirectionsRenderer;
   directionsService = new google.maps.DirectionsService;
@@ -25,8 +34,7 @@ function initMap() {
   autocompleteOrigin = new google.maps.places.Autocomplete(originInput);
   autocompleteDest = new google.maps.places.Autocomplete(destInput);
   google.maps.event.addListener(autocompleteDest, 'place_changed', function() {
-    // var place = autocompleteDest.getPlace();
-    drawPath(); //place.place_id
+    drawPath();
   });
 }
 
@@ -62,11 +70,11 @@ function initMap() {
 
 /*
  * Draws users route from origin to destination on map. Only called upon firing up place_changed
- * event listener from gMaps api.
- * TODO: figure out if using paces instead of text is better for origin and destination.
+ * event listener from gMaps api, or onchange event listner if autocomplete is now used by user.
+ * TODO: figure out if using places instead of text is better for origin and destination.
  */
 function drawPath() {
-  //for geocoding here, idea is to first try it without geocoding and then if it errors once,
+  //for geocoding here, possible idea is to first try it without geocoding and then if it errors once,
   //geocode, if it errors a second time throw an error
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
@@ -78,15 +86,17 @@ function drawPath() {
   directionsService.route(request, function(response, status) {
     if (status == 'OK') {
       directionsDisplay.setDirections(response);
+    } else if (status == 'NOT_FOUND' || status == 'ZERO_RESULTS') {
+      alert("Please enter a valid address and try again.")
     } else {
-      return status;
+      alert("Something went wrong, please try again later.")
     }
   });
 }
 
 function computeCost() {
-  let origin = document.getElementById('origin').value;
-  let destination = document.getElementById('destination').value;
+  var origin = document.getElementById('origin').value;
+  var destination = document.getElementById('destination').value;
   let service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix({
     origins: [origin],
