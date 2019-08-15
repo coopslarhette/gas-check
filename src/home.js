@@ -18,6 +18,15 @@ function initMap() {
     },
     zoom: 3
   });
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      map.setCenter({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+      map.setZoom(6);
+    });
+  }
   geocoder = new google.maps.Geocoder();
   directionsDisplay = new google.maps.DirectionsRenderer;
   directionsService = new google.maps.DirectionsService;
