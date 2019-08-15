@@ -2,7 +2,6 @@ var map;
 var geocoder;
 var directionsDisplay;
 var directionsService;
-var gMarkers = [];
 var autocompleteOrigin;
 var autocompleteDest;
 
@@ -13,7 +12,7 @@ function initMap() {
   var originInput = document.getElementById('origin');
   var destInput = document.getElementById('destination');
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {
+    center: { //TODO: get user ip and center there
       lat: 39.956813,
       lng: -102.011721
     },
@@ -62,14 +61,11 @@ function initMap() {
 // }
 
 /*
- * Draws users route from origin to destination on map. Changes whenever there is a change in
- * the text in the destination input box (similar to drawMarker).
- *
- * TODO: Current issue with this is nitpicking; it resets the route instead of setting a new one
- * so the route color is slightly more transparent.
- */ //end
-function drawPath() { // issue here is all about finding the right event listener, maybe just
-  //gecode when this is called, fixes finding proper event listener issue
+ * Draws users route from origin to destination on map. Only called upon firing up place_changed
+ * event listener from gMaps api.
+ * TODO: figure out if using paces instead of text is better for origin and destination.
+ */
+function drawPath() {
   //for geocoding here, idea is to first try it without geocoding and then if it errors once,
   //geocode, if it errors a second time throw an error
   let start = document.getElementById('origin').value;
@@ -81,11 +77,9 @@ function drawPath() { // issue here is all about finding the right event listene
   };
   directionsService.route(request, function(response, status) {
     if (status == 'OK') {
-      //removes the final marker so no overlap with route marker
-      // gMarkers[gMarkers.length - 1].setMap(null);
       directionsDisplay.setDirections(response);
     } else {
-      console.log("error: " + status);
+      return status;
     }
   });
 }
