@@ -29,13 +29,14 @@
               </div>
               <!-- oninput is resource intensive but it makes a better user
               experience by confirming their origin and destination quickly -->
-              <input id="origin" oninput="drawMarker()" onchange="removeMarkers()" type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point Input" aria-describedby="inputGroup-sizing-sm">
+              <!-- oninput="drawMarker()" onchange="removeMarkers()" -->
+              <input id="origin"  type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point Input" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
           <div class="col">
             <!-- end dest -->
             <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input id="destination" oninput="drawPath()" type="text" placeholder="Destination" class="form-control" aria-label="Ending Point Input" aria-describedby="inputGroup-sizing-sm">
+              <input id="destination" type="text" placeholder="Destination" class="form-control" aria-label="Ending Point Input" aria-describedby="inputGroup-sizing-sm">
               <div class="input-group-append">
                 <span class="input-group-text" id="basic-addon1">B</span>
               </div>
@@ -70,7 +71,6 @@
         </div>
       </div>
       <div class="col-5" style="padding-left: 0; padding-right: 0">
-        <!-- map style="border: 1px solid black" -->
         <div id="map">
         </div>
       </div>
@@ -78,7 +78,7 @@
   </div>
 
   <script defer type="text/javascript" src="src/home.js"></script>
-  <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg&callback=initMap"></script>
+  <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg&libraries=places&callback=initMap"></script>
 </body>
 
 </html>
