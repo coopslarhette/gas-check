@@ -62,8 +62,8 @@ function initMap() {
 
 /*
  * Draws users route from origin to destination on map. Only called upon firing up place_changed
- * event listener from gMaps api.
- * TODO: figure out if using paces instead of text is better for origin and destination.
+ * event listener from gMaps api, or onchange event listner if autocomplete is now used by user.
+ * TODO: figure out if using places instead of text is better for origin and destination.
  */
 function drawPath() {
   //for geocoding here, idea is to first try it without geocoding and then if it errors once,
@@ -78,8 +78,10 @@ function drawPath() {
   directionsService.route(request, function(response, status) {
     if (status == 'OK') {
       directionsDisplay.setDirections(response);
+    } else if (status == 'NOT_FOUND' || status == 'ZERO_RESULTS') {
+      alert("Please enter a valid address and try again.")
     } else {
-      return status;
+      alert("Something went wrong, please try again later.")
     }
   });
 }
