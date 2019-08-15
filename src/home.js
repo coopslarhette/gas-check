@@ -25,8 +25,7 @@ function initMap() {
   autocompleteOrigin = new google.maps.places.Autocomplete(originInput);
   autocompleteDest = new google.maps.places.Autocomplete(destInput);
   google.maps.event.addListener(autocompleteDest, 'place_changed', function() {
-    // var place = autocompleteDest.getPlace();
-    drawPath(); //place.place_id
+    drawPath();
   });
 }
 
@@ -66,7 +65,7 @@ function initMap() {
  * TODO: figure out if using places instead of text is better for origin and destination.
  */
 function drawPath() {
-  //for geocoding here, idea is to first try it without geocoding and then if it errors once,
+  //for geocoding here, possible idea is to first try it without geocoding and then if it errors once,
   //geocode, if it errors a second time throw an error
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
