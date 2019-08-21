@@ -141,7 +141,10 @@ function computeCost(response, status) {
     let destinations = response.destinationAddresses;
     let results = response.rows[0].elements;
     let element = results[0];
-    let distance = parseInt(element.distance.text);
+    let distanceText = element.distance.text;
+    distanceText = distanceText.replace(/,/g, "");
+    let distance = parseInt(distanceText.split(' ')[0]);
+    console.log(element.distance.text);
     let duration = element.duration.text; //time
     let mpg = parseInt(document.getElementById('mpg').value);
     if (mpg <= 0) {
@@ -152,6 +155,8 @@ function computeCost(response, status) {
       alert("Please enter a valid gas price.")
     }
     let totalCost = distance / mpg * galPrice;
+    console.log("distance: " + distance + ", mpg: " + mpg + ", price: " +
+      totalCost);
     if (totalCost < 1) {
       totalCost = 1;
     } else {
@@ -162,7 +167,7 @@ function computeCost(response, status) {
     let div = document.createElement("div");
     let h4 = document.createElement("h4");
     let msg = "Your trip will use approximately $" + totalCost +
-      " worth of gas and will take about " + duration + ".";
+      " worth of gas and should take about " + duration + ".";
     try {
       let previousResult = document.getElementById('result');
       previousResult.parentNode.removeChild(previousResult);
@@ -175,7 +180,6 @@ function computeCost(response, status) {
     h4.textContent = msg;
     document.getElementById('compute').appendChild(div);
     document.getElementById('result').appendChild(h4);
-    document.getElementById("compute").appendChild(div);
   } else {
     alert("error message: " + status);
   }
