@@ -131,10 +131,10 @@ function calcDistance() {
     unitSystem: google.maps.UnitSystem.IMPERIAL,
     avoidHighways: false,
     avoidTolls: false,
-  }, callback);
+  }, computeCost);
 }
 
-function callback(response, status) {
+function computeCost(response, status) {
   if (status == 'OK') {
     //calculation; TODO: model gas usage more accurately
     let origins = response.originAddresses;
@@ -144,8 +144,14 @@ function callback(response, status) {
     let distance = parseInt(element.distance.text);
     let duration = element.duration.text; //time
     let mpg = parseInt(document.getElementById('mpg').value);
-    let galCost = parseInt(document.getElementById('gallon-cost').value);
-    let totalCost = distance / mpg * galCost;
+    if (mpg <= 0) {
+      alert("Please enter a valid MPG.")
+    }
+    let galPrice = parseInt(document.getElementById('gallon-cost').value);
+    if (galPrice <= 0) {
+      alert("Please enter a valid gas price.")
+    }
+    let totalCost = distance / mpg * galPrice;
     if (totalCost < 1) {
       totalCost = 1;
     } else {
@@ -156,7 +162,7 @@ function callback(response, status) {
     let div = document.createElement("div");
     let h4 = document.createElement("h4");
     let msg = "Your trip will use approximately $" + totalCost +
-      " worth of gas.";
+      " worth of gas and will take about " + duration + ".";
     try {
       let previousResult = document.getElementById('result');
       previousResult.parentNode.removeChild(previousResult);
