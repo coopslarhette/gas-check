@@ -9,8 +9,8 @@ var autocompleteDest;
  * Initializes map and API elements. Map is centered on US with a country wide zoom level.
  */
 function initMap() {
-  var originInput = document.getElementById('origin');
-  var destInput = document.getElementById('destination');
+  let initLat;
+  let initLong
   map = new google.maps.Map(document.getElementById('map'), {
     center: { //TODO: get user ip and center there
       lat: 39.956813,
@@ -20,21 +20,46 @@ function initMap() {
   });
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
+      initLat = position.coords.latitude;
+      initLong = position.coords.longitude;
+      setOriginInput(initLat, initLong);
       map.setCenter({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
+        lat: initLat,
+        lng: initLong
       })
-      map.setZoom(6);
+      map.setZoom(8);
     });
   }
   geocoder = new google.maps.Geocoder();
   directionsDisplay = new google.maps.DirectionsRenderer;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay.setMap(map);
-  autocompleteOrigin = new google.maps.places.Autocomplete(originInput);
-  autocompleteDest = new google.maps.places.Autocomplete(destInput);
+  autocompleteOrigin = new google.maps.places.Autocomplete(document.getElementById(
+    'origin'));
+  autocompleteDest = new google.maps.places.Autocomplete(document.getElementById(
+    'destination'));
   google.maps.event.addListener(autocompleteDest, 'place_changed', function() {
     drawPath();
+  });
+}
+
+function setOriginInput(lat, lng) {
+  let latlng = {
+    lat: lat,
+    lng: lng
+  };
+  geocoder.geocode({
+    'location': latlng
+  }, function(results, status) {
+    if (status === 'OK') {
+      if (results[0]) {
+        document.getElementById('origin').value = results[0].formatted_address;
+      } else {
+        alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
   });
 }
 
