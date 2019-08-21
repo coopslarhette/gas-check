@@ -130,10 +130,12 @@ function computeCost(response, status) {
     let mpg = parseInt(document.getElementById('mpg').value);
     if (mpg <= 0) {
       alert("Please enter a valid MPG.")
+      return
     }
     let galPrice = parseInt(document.getElementById('gallon-cost').value);
     if (galPrice <= 0) {
       alert("Please enter a valid gas price.")
+      return
     }
     let totalCost = distance / mpg * galPrice;
     if (totalCost < 1) {
