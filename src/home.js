@@ -22,7 +22,7 @@ function initMap() {
     navigator.geolocation.getCurrentPosition(function(position) {
       initLat = position.coords.latitude;
       initLong = position.coords.longitude;
-      setOriginInput(initLat, initLong);
+      fillOriginInput(initLat, initLong);
       map.setCenter({
         lat: initLat,
         lng: initLong
@@ -43,11 +43,12 @@ function initMap() {
   });
 }
 
-function setOriginInput(lat, lng) {
+function fillOriginInput(lat, lng) {
   let latlng = {
     lat: lat,
     lng: lng
   };
+  //reverse geocode
   geocoder.geocode({
     'location': latlng
   }, function(results, status) {
@@ -119,7 +120,7 @@ function drawPath() {
   });
 }
 
-function computeCost() {
+function calcDistance() {
   var origin = document.getElementById('origin').value;
   var destination = document.getElementById('destination').value;
   let service = new google.maps.DistanceMatrixService();
