@@ -9,8 +9,8 @@ var autocompleteDest;
  * Initializes map and API elements. Map is centered on US with a country wide zoom level.
  */
 function initMap() {
-  var originInput = document.getElementById('origin');
-  var destInput = document.getElementById('destination');
+  let initLat;
+  let initLong
   map = new google.maps.Map(document.getElementById('map'), {
     center: { //TODO: get user ip and center there
       lat: 39.956813,
@@ -20,53 +20,53 @@ function initMap() {
   });
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
+      initLat = position.coords.latitude;
+      initLong = position.coords.longitude;
+      fillOriginInput(initLat, initLong);
       map.setCenter({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
+        lat: initLat,
+        lng: initLong
       })
-      map.setZoom(6);
+      map.setZoom(8);
     });
   }
   geocoder = new google.maps.Geocoder();
   directionsDisplay = new google.maps.DirectionsRenderer;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay.setMap(map);
-  autocompleteOrigin = new google.maps.places.Autocomplete(originInput);
-  autocompleteDest = new google.maps.places.Autocomplete(destInput);
+  autocompleteOrigin = new google.maps.places.Autocomplete(document.getElementById(
+    'origin'));
+  autocompleteDest = new google.maps.places.Autocomplete(document.getElementById(
+    'destination'));
   google.maps.event.addListener(autocompleteDest, 'place_changed', function() {
     drawPath();
   });
 }
 
-// /*
-//  * Draws markers on map whenever there is a change in the start input box text to let user know
-//  * that their input is valid.
-//  */
-// function drawMarker() {
-//   let originAddress = document.getElementById('origin').value;
-//   geocoder.geocode({
-//       'address': originAddress
-//     },
-//     function(results, status) {
-//       if (status == 'OK') {
-//         map.setCenter(results[0].geometry.location);
-//         map.setZoom(16);
-//         var marker = new google.maps.Marker({
-//           map: map,
-//           position: results[0].geometry.location
-//         });
-//         gMarkers.push(marker);
-//       } else {}
-//     });
-//   marker.setMap(map);
-// }
-//
-// function removeMarkers() {
-//   console.log("removeMarker called");
-//   for (let i = 0; i < gMarkers.length - 1; i++) {
-//     gMarkers[i].setMap(null);
-//   }
-// }
+/*
+ * Fills origin input box with address from geolocation, if user allows it and it works,
+ * makes use of reversing geocoding to get text address from lat, lng coords.
+ */
+function fillOriginInput(lat, lng) {
+  let latlng = {
+    lat: lat,
+    lng: lng
+  };
+  //reverse geocode
+  geocoder.geocode({
+    'location': latlng
+  }, function(results, status) {
+    if (status === 'OK') {
+      if (results[0]) {
+        document.getElementById('origin').value = results[0].formatted_address;
+      } else {
+        alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
+}
 
 /*
  * Draws users route from origin to destination on map. Only called upon firing up place_changed
@@ -74,8 +74,8 @@ function initMap() {
  * TODO: figure out if using places instead of text is better for origin and destination.
  */
 function drawPath() {
-  //for geocoding here, possible idea is to first try it without geocoding and then if it errors once,
-  //geocode, if it errors a second time throw an error
+  //for geocoding here, possible idea is to first try it without geocoding and then
+  //if it errors once, geocode, if it errors a second time throw an error
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
   let request = {
@@ -94,7 +94,11 @@ function drawPath() {
   });
 }
 
-function computeCost() {
+/*
+ * Sets up and calls DistanceMatrixService to get distanxce and duration for response
+ * to user. Callback function is computeCost().
+ */
+function calcDistance() {
   var origin = document.getElementById('origin').value;
   var destination = document.getElementById('destination').value;
   let service = new google.maps.DistanceMatrixService();
@@ -105,21 +109,33 @@ function computeCost() {
     unitSystem: google.maps.UnitSystem.IMPERIAL,
     avoidHighways: false,
     avoidTolls: false,
-  }, callback);
+  }, computeCost);
 }
 
-function callback(response, status) {
+/*
+ * Callback function from DistanceMatrixService which then calculates total cost and builds
+ * response div.
+ */
+function computeCost(response, status) {
   if (status == 'OK') {
     //calculation; TODO: model gas usage more accurately
     let origins = response.originAddresses;
     let destinations = response.destinationAddresses;
     let results = response.rows[0].elements;
     let element = results[0];
-    let distance = parseInt(element.distance.text);
-    let duration = element.duration.text; //time
+    let distanceText = element.distance.text;
+    distanceText = distanceText.replace(/,/g, "");
+    let distance = parseInt(distanceText.split(' ')[0]);
+    let duration = element.duration.text;
     let mpg = parseInt(document.getElementById('mpg').value);
-    let galCost = parseInt(document.getElementById('gallon-cost').value);
-    let totalCost = distance / mpg * galCost;
+    if (mpg <= 0) {
+      alert("Please enter a valid MPG.")
+    }
+    let galPrice = parseInt(document.getElementById('gallon-cost').value);
+    if (galPrice <= 0) {
+      alert("Please enter a valid gas price.")
+    }
+    let totalCost = distance / mpg * galPrice;
     if (totalCost < 1) {
       totalCost = 1;
     } else {
@@ -130,7 +146,7 @@ function callback(response, status) {
     let div = document.createElement("div");
     let h4 = document.createElement("h4");
     let msg = "Your trip will use approximately $" + totalCost +
-      " worth of gas.";
+      " worth of gas and should take about " + duration + ".";
     try {
       let previousResult = document.getElementById('result');
       previousResult.parentNode.removeChild(previousResult);
@@ -143,7 +159,6 @@ function callback(response, status) {
     h4.textContent = msg;
     document.getElementById('compute').appendChild(div);
     document.getElementById('result').appendChild(h4);
-    document.getElementById("compute").appendChild(div);
   } else {
     alert("error message: " + status);
   }
