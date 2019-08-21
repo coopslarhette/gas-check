@@ -43,6 +43,10 @@ function initMap() {
   });
 }
 
+/*
+ * Fills origin input box with address from geolocation, if user allows it and it works,
+ * makes use of reversing geocoding to get text address from lat, lng coords.
+ */
 function fillOriginInput(lat, lng) {
   let latlng = {
     lat: lat,
@@ -64,44 +68,14 @@ function fillOriginInput(lat, lng) {
   });
 }
 
-// /*
-//  * Draws markers on map whenever there is a change in the start input box text to let user know
-//  * that their input is valid.
-//  */
-// function drawMarker() {
-//   let originAddress = document.getElementById('origin').value;
-//   geocoder.geocode({
-//       'address': originAddress
-//     },
-//     function(results, status) {
-//       if (status == 'OK') {
-//         map.setCenter(results[0].geometry.location);
-//         map.setZoom(16);
-//         var marker = new google.maps.Marker({
-//           map: map,
-//           position: results[0].geometry.location
-//         });
-//         gMarkers.push(marker);
-//       } else {}
-//     });
-//   marker.setMap(map);
-// }
-//
-// function removeMarkers() {
-//   console.log("removeMarker called");
-//   for (let i = 0; i < gMarkers.length - 1; i++) {
-//     gMarkers[i].setMap(null);
-//   }
-// }
-
 /*
  * Draws users route from origin to destination on map. Only called upon firing up place_changed
  * event listener from gMaps api, or onchange event listner if autocomplete is now used by user.
  * TODO: figure out if using places instead of text is better for origin and destination.
  */
 function drawPath() {
-  //for geocoding here, possible idea is to first try it without geocoding and then if it errors once,
-  //geocode, if it errors a second time throw an error
+  //for geocoding here, possible idea is to first try it without geocoding and then
+  //if it errors once, geocode, if it errors a second time throw an error
   let start = document.getElementById('origin').value;
   let end = document.getElementById('destination').value;
   let request = {
@@ -120,6 +94,10 @@ function drawPath() {
   });
 }
 
+/*
+ * Sets up and calls DistanceMatrixService to get distanxce and duration for response
+ * to user. Callback function is computeCost().
+ */
 function calcDistance() {
   var origin = document.getElementById('origin').value;
   var destination = document.getElementById('destination').value;
@@ -134,6 +112,10 @@ function calcDistance() {
   }, computeCost);
 }
 
+/*
+ * Callback function from DistanceMatrixService which then calculates total cost and builds
+ * response div.
+ */
 function computeCost(response, status) {
   if (status == 'OK') {
     //calculation; TODO: model gas usage more accurately
@@ -144,8 +126,7 @@ function computeCost(response, status) {
     let distanceText = element.distance.text;
     distanceText = distanceText.replace(/,/g, "");
     let distance = parseInt(distanceText.split(' ')[0]);
-    console.log(element.distance.text);
-    let duration = element.duration.text; //time
+    let duration = element.duration.text;
     let mpg = parseInt(document.getElementById('mpg').value);
     if (mpg <= 0) {
       alert("Please enter a valid MPG.")
@@ -155,8 +136,6 @@ function computeCost(response, status) {
       alert("Please enter a valid gas price.")
     }
     let totalCost = distance / mpg * galPrice;
-    console.log("distance: " + distance + ", mpg: " + mpg + ", price: " +
-      totalCost);
     if (totalCost < 1) {
       totalCost = 1;
     } else {
