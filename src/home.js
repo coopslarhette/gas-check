@@ -4,6 +4,8 @@ var directionsDisplay;
 var directionsService;
 var autocompleteOrigin;
 var autocompleteDest;
+var originVal;
+var destVal;
 
 /*
  * Initializes map and API elements. Map is centered on US with a country wide zoom level.
@@ -76,11 +78,11 @@ function fillOriginInput(lat, lng) {
 function drawPath() {
   //for geocoding here, possible idea is to first try it without geocoding and then
   //if it errors once, geocode, if it errors a second time throw an error
-  let start = document.getElementById('origin').value;
-  let end = document.getElementById('destination').value;
+  originVal = document.getElementById('origin').value;
+  destVal = document.getElementById('destination').value;
   let request = {
-    origin: start,
-    destination: end,
+    origin: originVal,
+    destination: destVal,
     travelMode: 'DRIVING'
   };
   directionsService.route(request, function(response, status) {
@@ -99,12 +101,10 @@ function drawPath() {
  * to user. Callback function is computeCost().
  */
 function calcDistance() {
-  var origin = document.getElementById('origin').value;
-  var destination = document.getElementById('destination').value;
   let service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix({
-    origins: [origin],
-    destinations: [destination],
+    origins: [originVal],
+    destinations: [destVal],
     travelMode: 'DRIVING',
     unitSystem: google.maps.UnitSystem.IMPERIAL,
     avoidHighways: false,
@@ -130,10 +130,12 @@ function computeCost(response, status) {
     let mpg = parseInt(document.getElementById('mpg').value);
     if (mpg <= 0) {
       alert("Please enter a valid MPG.")
+      return
     }
     let galPrice = parseInt(document.getElementById('gallon-cost').value);
     if (galPrice <= 0) {
       alert("Please enter a valid gas price.")
+      return
     }
     let totalCost = distance / mpg * galPrice;
     if (totalCost < 1) {
