@@ -88,11 +88,12 @@ function drawPath() {
   directionsService.route(request, function(response, status) {
     if (status == 'OK') {
       directionsDisplay.setDirections(response);
-    } else if (status == 'NOT_FOUND' || status == 'ZERO_RESULTS') {
-      alert("Please enter a valid address and try again.")
-    } else {
-      alert("Something went wrong, please try again later.")
     }
+    // } else if (status == 'NOT_FOUND' || status == 'ZERO_RESULTS') {
+    //   alert("Please enter a valid address and try again.")
+    // } else {
+    //   alert("Something went wrong, please try again later.")
+    // }
   });
 }
 
