@@ -41,9 +41,8 @@ function initMap(listener) {
   autocompleteDest = new google.maps.places.Autocomplete(document.getElementById(
     'destination'));
   google.maps.event.addListener(autocompleteDest, 'place_changed', drawPath)
-  $('#destination').on('change', drawPath) // in case autocomplete is not used
-  console.log($('#compute-btn').innerHTML)
-  $('#compute-btn').on('click', calcDistance)
+  document.getElementById('destination').addEventListener('change', drawPath) // // in case autocomplete is not used
+  document.getElementById('compute-btn').addEventListener('click', calcDistance)
 }
 
 /*
