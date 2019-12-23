@@ -72,8 +72,7 @@ function fillOriginInput(lat, lng) {
 
 /*
  * Draws users route from origin to destination on map. Only called upon firing up place_changed
- * event listener from gMaps api, or onchange event listner if autocomplete is now used by user.
- * TODO: figure out if using places instead of text is better for origin and destination.
+ * event listener from gMaps api, or onchange event listener if autocomplete is now used by user.
  */
 function drawPath() {
   //for geocoding here, possible idea is to first try it without geocoding and then
