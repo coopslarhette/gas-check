@@ -4,4 +4,4 @@ Estimate gas usage when driving from one point to another
 pull data from a few different api's to get mpg and gas price
 * in very early phases of development 
 
-now deployed at https://coopslarhette.github.io/gas-check/
+deployed at https://coopslarhette.github.io/gas-check/
