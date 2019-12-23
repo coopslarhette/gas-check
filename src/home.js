@@ -1,16 +1,16 @@
-var map;
-var geocoder;
-var directionsDisplay;
-var directionsService;
-var autocompleteOrigin;
-var autocompleteDest;
-var originVal;
-var destVal;
+let map
+let geocoder;
+let directionsDisplay;
+let directionsService;
+let autocompleteOrigin
+let autocompleteDest
+let originVal
+let destVal
 
 /*
  * Initializes map and API elements. Map is centered on US with a country wide zoom level.
  */
-function initMap() {
+function initMap(listener) {
   let initLat;
   let initLong
   map = new google.maps.Map(document.getElementById('map'), {
@@ -40,9 +40,10 @@ function initMap() {
     'origin'));
   autocompleteDest = new google.maps.places.Autocomplete(document.getElementById(
     'destination'));
-  google.maps.event.addListener(autocompleteDest, 'place_changed', function() {
-    drawPath();
-  });
+  google.maps.event.addListener(autocompleteDest, 'place_changed', drawPath)
+  $('#destination').on('change', drawPath) // in case autocomplete is not used
+  console.log($('#compute-btn').innerHTML)
+  $('#compute-btn').on('click', calcDistance)
 }
 
 /*
@@ -160,7 +161,7 @@ function computeCost(response, status) {
     div.style.margin = "auto";
     div.style.marginTop = "13px";
     h4.textContent = msg;
-    document.getElementById('compute').appendChild(div);
+    document.getElementById('compute-div').appendChild(div);
     document.getElementById('result').appendChild(h4);
   } else {
     alert("error message: " + status);
