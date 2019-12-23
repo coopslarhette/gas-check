@@ -18,6 +18,15 @@ body {
   display: block;
 }
 
+#compute-btn, .navbar {
+  background-color: #53afed;
+}
+
+.input-group, .mb-3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 #info {
   margin-bottom: 20px;
 }
