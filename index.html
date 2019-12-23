@@ -14,7 +14,7 @@
 
 <body>
   <div class="container" id="container">
-    <nav class="navbar navbar-light" style="background-color: #53afed;">
+    <nav class="navbar navbar-light">
       <a class="navbar-brand" href="https://coopslarhette.github.io/gas-check/">Gauge</a>
       <a href="https://github.com/coopslarhette" class="navbar-left"><img id="github-logo" src="img/github-logo.png"></a>
     </nav>
@@ -23,20 +23,17 @@
         <div id="flex" class="col">
           <div class="col">
             <!-- start dest -->
-            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">A</span>
               </div>
-              <!-- oninput is resource intensive but it makes a better user
-              experience by confirming their origin and destination quickly -->
-              <!-- oninput="drawMarker()" onchange="removeMarkers()" -->
               <input id="origin"  type="text" placeholder="Starting Point" class="form-control" aria-label="Starting Point Input" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
           <div class="col">
             <!-- end dest -->
-            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
-              <input id="destination" onchange="drawPath()" type="text" placeholder="Destination" class="form-control" aria-label="Ending Point Input" aria-describedby="inputGroup-sizing-sm">
+            <div class="input-group mb-3">
+              <input id="destination" type="text" placeholder="Destination" class="form-control" aria-label="Ending Point Input" aria-describedby="inputGroup-sizing-sm">
               <div class="input-group-append">
                 <span class="input-group-text" id="basic-addon1">B</span>
               </div>
@@ -46,7 +43,7 @@
         <div id="flex" class="col">
           <div class="col">
             <!-- cost/gal -->
-            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">$</span>
               </div>
@@ -55,7 +52,7 @@
           </div>
           <div class="col">
             <!-- mpg -->
-            <div class="input-group mb-3" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">η</span>
               </div>
@@ -63,20 +60,21 @@
             </div>
           </div>
         </div>
-        <div id="compute" class="row">
+        <div id="compute-div" class="row">
           <!-- compute -->
           <div class="col">
-            <button style="background-color: #53afed;" onclick="calcDistance()" type="button" class="btn btn-lg">Compute Cost</button>
+            <button id="compute-btn" type="button" class="btn btn-lg">Compute Cost</button>
           </div>
         </div>
       </div>
-      <div class="col-5" style="padding-left: 0; padding-right: 0">
+      <div class="col-5">
         <div id="map">
         </div>
       </div>
     </div>
   </div>
 
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script defer type="text/javascript" src="src/home.js"></script>
   <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg&libraries=places&callback=initMap"></script>
 </body>
