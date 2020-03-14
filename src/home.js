@@ -73,7 +73,6 @@ function drawPath() {
  */
 function computeCost(response, status) {
   if (status === 'OK') {
-    // calculation; TODO: model gas usage more accurately
     // eslint-disable-next-line no-unused-vars
     const origins = response.originAddresses
     // eslint-disable-next-line no-unused-vars
