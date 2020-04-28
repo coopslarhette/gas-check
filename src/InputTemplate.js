@@ -4,7 +4,7 @@ import FormControl from 'react-bootstrap/FormControl'
 
 
 function InputTemplate(props) {
-  const {placeholder, prepend} = props
+  const { placeholder, prepend } = props
   return (
     <div>
       <InputGroup className="mb-3">

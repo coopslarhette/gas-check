@@ -1,7 +1,6 @@
 import React from 'react'
 import './InputArea.css'
 import Row from 'react-bootstrap/Row'
-// import OriginInput from './OriginInput'
 import InputTemplate from './InputTemplate'
 
 function InputArea() {

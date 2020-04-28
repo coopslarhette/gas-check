@@ -9,9 +9,12 @@ export default function App() {
   return (
     <div className="App">
       <Container>
-        <GaugeNavBar />
-        <InputOutputArea />
-        {/* <Map/> */}
+        <GaugeNavBar/>
+        <div id="flex">
+          <InputOutputArea/>
+          {/* <Map/> */}
+        </div>
+
       </Container>
     </div>
   )
