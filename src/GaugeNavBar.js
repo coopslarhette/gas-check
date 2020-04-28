@@ -12,7 +12,7 @@ function GaugeNavBar() {
         </NavbarBrand>
         <div className="ml-auto">
           <a href="https://github.com/coopslarhette">
-            <img alt={'github page'} src="../public/github-logo.png"/>
+            <img alt="github page" src="../public/github-logo.png" />
           </a>
         </div>
       </Navbar>

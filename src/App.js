@@ -1,17 +1,18 @@
 import React from 'react'
 import './App.css'
+import Container from 'react-bootstrap/Container'
 import GaugeNavBar from './GaugeNavBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Container from 'react-bootstrap/Container'
+import InputOutputArea from './InputOutputArea'
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <Container>
-        <GaugeNavBar/>
+        <GaugeNavBar />
+        <InputOutputArea />
+        {/* <Map/> */}
       </Container>
     </div>
   )
 }
-
-export default App
