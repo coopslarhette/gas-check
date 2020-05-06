@@ -14,7 +14,6 @@ export default function App() {
           <InputOutputArea/>
           {/* <Map/> */}
         </div>
-
       </Container>
     </div>
   )

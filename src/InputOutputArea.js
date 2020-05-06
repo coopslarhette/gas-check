@@ -6,7 +6,7 @@ function InputOutputArea() {
   return (
     <div>
       <Col sm={8}>
-        <InputArea/>
+        <InputArea />
       </Col>
     </div>
   )
