@@ -11,10 +11,6 @@ let originVal
 let destVal
 
 /*
- * Initializes map and API elements. Map is centered on US with a country wide zoom level.
- */
-
-/*
  * Fills origin input box with address from geolocation, if user allows it and it works,
  * makes use of reversing geocoding to get text address from lat, lng coords.
  */
@@ -143,6 +139,10 @@ function calcDistance() {
     avoidTolls: false,
   }, computeCost)
 }
+
+/*
+ * Initializes map and API elements. Map is centered on US with a country wide zoom level.
+ */
 
 // eslint-disable-next-line
 function initMap(listener) {
