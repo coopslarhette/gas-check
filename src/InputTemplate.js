@@ -4,6 +4,8 @@ import FormControl from 'react-bootstrap/FormControl'
 
 // may want to change this to a class
 function InputTemplate(props) {
+  // TODO
+  // eslint-disable-next-line react/prop-types
   const { placeholder, prepend } = props
   const divStyle = { marginLeft: 30, marginTop: 10 }
   return (
