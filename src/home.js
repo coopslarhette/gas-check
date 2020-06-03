@@ -1,24 +1,15 @@
 /* global google */
 
-let map
-let geocoder
-let directionsDisplay
-let directionsService
-// eslint-disable-next-line no-unused-vars
-let autocompleteOrigin
-let autocompleteDest
-let originVal
-let destVal
-
 /*
  * Fills origin input box with address from geolocation, if user allows it and it works,
  * makes use of reversing geocoding to get text address from lat, lng coords.
  */
-function fillOriginInput(lat, lng) {
+function fillOriginInput(geocoder, lat, lng) {
   const latlng = {
     lat,
     lng,
   }
+
   // reverse geocode
   geocoder.geocode({ location: latlng }, (results, status) => {
     if (status === 'OK') {
@@ -34,32 +25,6 @@ function fillOriginInput(lat, lng) {
       // eslint-disable-next-line no-console
       console.log(`Geocoder failed due to: ${status}`)
     }
-  })
-}
-
-/*
- * Draws users route from origin to destination on map. Only called upon firing up place_changed
- * event listener from gMaps api, or onchange event listener if autocomplete is now used by user.
- */
-function drawPath() {
-  // for geocoding here, possible idea is to first try it without geocoding and then
-  // if it errors once, geocode, if it errors a second time throw an error
-  originVal = document.getElementById('origin').value
-  destVal = document.getElementById('destination').value
-  const request = {
-    origin: originVal,
-    destination: destVal,
-    travelMode: 'DRIVING',
-  }
-  directionsService.route(request, (response, status) => {
-    if (status === 'OK') {
-      directionsDisplay.setDirections(response)
-    }
-    // } else if (status == 'NOT_FOUND' || status == 'ZERO_RESULTS') {
-    //   alert('Please enter a valid address and try again.')
-    // } else {
-    //   alert('Something went wrong, please try again later.')
-    // } // need to figure out better handling of this methinks
   })
 }
 
@@ -131,8 +96,8 @@ function computeCost(response, status) {
 function calcDistance() {
   const service = new google.maps.DistanceMatrixService()
   service.getDistanceMatrix({
-    origins: [originVal],
-    destinations: [destVal],
+    origins: [document.getElementById('origin').value],
+    destinations: [document.getElementById('destination').value],
     travelMode: 'DRIVING',
     unitSystem: google.maps.UnitSystem.IMPERIAL,
     avoidHighways: false,
@@ -146,9 +111,14 @@ function calcDistance() {
 
 // eslint-disable-next-line
 function initMap(listener) {
+  const geocoder = new google.maps.Geocoder()
+  const directionsDisplay = new google.maps.DirectionsRenderer()
+  const autocompleteOrigin = new google.maps.places.Autocomplete(document.getElementById('origin'))
+  const autocompleteDest = new google.maps.places.Autocomplete(document.getElementById('destination'))
+  const directionsService = new google.maps.DirectionsService()
   let initLat
   let initLong
-  map = new google.maps.Map(document.getElementById('map'), {
+  const map = new google.maps.Map(document.getElementById('map'), {
     center: {
       lat: 39.956813,
       lng: -102.011721,
@@ -159,7 +129,7 @@ function initMap(listener) {
     navigator.geolocation.getCurrentPosition((position) => {
       initLat = position.coords.latitude
       initLong = position.coords.longitude
-      fillOriginInput(initLat, initLong)
+      fillOriginInput(geocoder, initLat, initLong)
       map.setCenter({
         lat: initLat,
         lng: initLong,
@@ -167,13 +137,24 @@ function initMap(listener) {
       map.setZoom(8)
     })
   }
-  geocoder = new google.maps.Geocoder()
-  directionsDisplay = new google.maps.DirectionsRenderer()
-  directionsService = new google.maps.DirectionsService()
   directionsDisplay.setMap(map)
-  autocompleteOrigin = new google.maps.places.Autocomplete(document.getElementById('origin'))
-  autocompleteDest = new google.maps.places.Autocomplete(document.getElementById('destination'))
-  google.maps.event.addListener(autocompleteDest, 'place_changed', drawPath)
-  document.getElementById('destination').addEventListener('change', drawPath) // in case autocomplete is not used
+  google.maps.event.addListener(autocompleteDest, 'place_changed', () => {
+    const request = {
+      origin: document.getElementById('origin').value,
+      destination: document.getElementById('destination').value,
+      travelMode: 'DRIVING',
+    }
+    directionsService.route(request, (response, status) => {
+      if (status === 'OK') {
+        directionsDisplay.setDirections(response)
+      }
+      // } else if (status == 'NOT_FOUND' || status == 'ZERO_RESULTS') {
+      //   alert('Please enter a valid address and try again.')
+      // } else {
+      //   alert('Something went wrong, please try again later.')
+      // } // need to figure out better handling of this methinks
+    })
+  })
+  // document.getElementById('destination').addEventListener('change', drawPath(directionsService, directionsDisplay)) // in case autocomplete is not used
   document.getElementById('compute-btn').addEventListener('click', calcDistance)
 }
