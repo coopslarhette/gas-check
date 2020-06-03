@@ -24,7 +24,7 @@ function fillOriginInput(geocoder, lat, lng) {
  * Callback function from DistanceMatrixService which then calculates total cost and builds
  * response div.
  */
-function computeCost(response, status) {
+function computeCostAndBuildResponse(response, status) {
   if (status === 'OK') {
     const result = response.rows[0].elements[0]
     const distance = parseInt(result.distance.text.replace(/,/g, '').split(' ')[0], 10)
@@ -47,8 +47,7 @@ function computeCost(response, status) {
     // response div creation
     const div = document.createElement('div')
     const h4 = document.createElement('h4')
-    const msg = `Your trip will use approximately $${totalCost
-    } worth of gas and should take about ${duration}.`
+    const msg = `Your trip will use approximately $${totalCost} worth of gas and should take about ${duration}.`
     const previousResult = document.getElementById('result')
     if (previousResult) {
       previousResult.parentNode.removeChild(previousResult)
@@ -81,13 +80,14 @@ function calcDistance() {
     unitSystem: google.maps.UnitSystem.IMPERIAL,
     avoidHighways: false,
     avoidTolls: false,
-  }, computeCost)
+  }, computeCostAndBuildResponse)
 }
 
 /*
  * Initializes map and API elements. Map is centered on US with a country wide zoom level. Called
  * by Google Maps API script at bottom of index.html
  */
+
 // eslint-disable-next-line no-unused-vars
 function initMap() {
   const geocoder = new google.maps.Geocoder()
@@ -104,18 +104,6 @@ function initMap() {
     },
     zoom: 3,
   })
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const geoLocatedLat = position.coords.latitude
-      const geoLocatedLng = position.coords.longitude
-      fillOriginInput(geocoder, geoLocatedLat, geoLocatedLng)
-      map.setCenter({
-        lat: geoLocatedLat,
-        lng: geoLocatedLng,
-      })
-      map.setZoom(8)
-    })
-  }
   directionsDisplay.setMap(map)
   google.maps.event.addListener(autocompleteDest, 'place_changed', () => {
     const request = {
@@ -135,6 +123,5 @@ function initMap() {
       // } // need to figure out better handling of this methinks
     })
   })
-  // document.getElementById('destination').addEventListener('change', drawPath(directionsService, directionsDisplay)) // in case autocomplete is not used
   document.getElementById('compute-btn').addEventListener('click', calcDistance)
 }
