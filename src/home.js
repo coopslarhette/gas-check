@@ -25,8 +25,8 @@ function fillOriginInput(geocoder, lat, lng) {
  * response div.
  */
 function computeCostAndBuildResponse(response, status) {
-  if (status === 'OK') {
-    const result = response.rows[0].elements[0]
+  const result = response.rows[0].elements[0]
+  if (result.status === 'OK') {
     const distance = parseInt(result.distance.text.replace(/,/g, '').split(' ')[0], 10)
     const duration = result.duration.text
     const userMPG = parseInt(document.getElementById('mpg').value, 10)
@@ -90,7 +90,6 @@ function calcDistance() {
 
 // eslint-disable-next-line no-unused-vars
 function initMap() {
-  const geocoder = new google.maps.Geocoder()
   const directionsDisplay = new google.maps.DirectionsRenderer()
   // need this for autocomplete to work on origin input
   // eslint-disable-next-line no-unused-vars
@@ -111,16 +110,13 @@ function initMap() {
       destination: document.getElementById('destination').value,
       travelMode: 'DRIVING',
     }
-
     directionsService.route(request, (response, status) => {
       if (status === 'OK') {
         directionsDisplay.setDirections(response)
+      } else {
+        // eslint-disable-next-line no-alert
+        alert('Sorry, there was an error, please try again.')
       }
-      // } else if (status == 'NOT_FOUND' || status == 'ZERO_RESULTS') {
-      //   alert('Please enter a valid address and try again.')
-      // } else {
-      //   alert('Something went wrong, please try again later.')
-      // } // need to figure out better handling of this methinks
     })
   })
   document.getElementById('compute-btn').addEventListener('click', calcDistance)
