@@ -15,15 +15,7 @@ function fillOriginInput(geocoder, lat, lng) {
     if (status === 'OK') {
       if (results[0]) {
         document.getElementById('origin').value = results[0].formatted_address
-      } else {
-        // eslint-disable-next-line no-alert
-        alert('No results found')
       }
-    } else {
-      // eslint-disable-next-line no-alert
-      alert('Sorry, there has been an error.')
-      // eslint-disable-next-line no-console
-      console.log(`Geocoder failed due to: ${status}`)
     }
   })
 }
@@ -34,45 +26,32 @@ function fillOriginInput(geocoder, lat, lng) {
  */
 function computeCost(response, status) {
   if (status === 'OK') {
-    // eslint-disable-next-line no-unused-vars
-    const origins = response.originAddresses
-    // eslint-disable-next-line no-unused-vars
-    const destinations = response.destinationAddresses
-    const results = response.rows[0].elements
-    const element = results[0]
-    let distanceText = element.distance.text
-    distanceText = distanceText.replace(/,/g, '')
-    const distance = parseInt(distanceText.split(' ')[0], 10)
-    const duration = element.duration.text
-    const mpg = parseInt(document.getElementById('mpg').value, 10)
-    if (mpg <= 0) {
+    const result = response.rows[0].elements[0]
+    const distance = parseInt(result.distance.text.replace(/,/g, '').split(' ')[0], 10)
+    const duration = result.duration.text
+    const userMPG = parseInt(document.getElementById('mpg').value, 10)
+    if (userMPG <= 0) {
       // eslint-disable-next-line no-alert
       alert('Please enter a valid MPG.')
       return
     }
-    const galPrice = parseInt(document.getElementById('gallon-cost').value, 10)
-    if (galPrice <= 0) {
+    const gasPrice = parseInt(document.getElementById('gallon-cost').value, 10)
+    if (gasPrice <= 0) {
       // eslint-disable-next-line no-alert
       alert('Please enter a valid gas price.')
       return
     }
-    let totalCost = (distance / mpg) * galPrice
-    if (totalCost < 1) {
-      totalCost = 1
-    } else {
-      totalCost = totalCost.toFixed(0)
-    }
+    let totalCost = (distance / userMPG) * gasPrice
+    totalCost = totalCost < 1 ? 1 : totalCost.toFixed(0)
 
     // response div creation
     const div = document.createElement('div')
     const h4 = document.createElement('h4')
     const msg = `Your trip will use approximately $${totalCost
     } worth of gas and should take about ${duration}.`
-    try {
-      const previousResult = document.getElementById('result')
+    const previousResult = document.getElementById('result')
+    if (previousResult) {
       previousResult.parentNode.removeChild(previousResult)
-    } catch (err) {
-      // do nothing since child isn't there
     }
     div.className = 'alert alert-success'
     div.id = 'result'
@@ -106,18 +85,18 @@ function calcDistance() {
 }
 
 /*
- * Initializes map and API elements. Map is centered on US with a country wide zoom level.
+ * Initializes map and API elements. Map is centered on US with a country wide zoom level. Called
+ * by Google Maps API script at bottom of index.html
  */
-
-// eslint-disable-next-line
-function initMap(listener) {
+// eslint-disable-next-line no-unused-vars
+function initMap() {
   const geocoder = new google.maps.Geocoder()
   const directionsDisplay = new google.maps.DirectionsRenderer()
+  // need this for autocomplete to work on origin input
+  // eslint-disable-next-line no-unused-vars
   const autocompleteOrigin = new google.maps.places.Autocomplete(document.getElementById('origin'))
   const autocompleteDest = new google.maps.places.Autocomplete(document.getElementById('destination'))
   const directionsService = new google.maps.DirectionsService()
-  let initLat
-  let initLong
   const map = new google.maps.Map(document.getElementById('map'), {
     center: {
       lat: 39.956813,
@@ -127,12 +106,12 @@ function initMap(listener) {
   })
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition((position) => {
-      initLat = position.coords.latitude
-      initLong = position.coords.longitude
-      fillOriginInput(geocoder, initLat, initLong)
+      const geoLocatedLat = position.coords.latitude
+      const geoLocatedLng = position.coords.longitude
+      fillOriginInput(geocoder, geoLocatedLat, geoLocatedLng)
       map.setCenter({
-        lat: initLat,
-        lng: initLong,
+        lat: geoLocatedLat,
+        lng: geoLocatedLng,
       })
       map.setZoom(8)
     })
@@ -144,6 +123,7 @@ function initMap(listener) {
       destination: document.getElementById('destination').value,
       travelMode: 'DRIVING',
     }
+
     directionsService.route(request, (response, status) => {
       if (status === 'OK') {
         directionsDisplay.setDirections(response)
