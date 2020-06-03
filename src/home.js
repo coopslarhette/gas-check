@@ -1,26 +1,6 @@
 /* global google */
 
 /*
- * Fills origin input box with address from geolocation, if user allows it and it works,
- * makes use of reversing geocoding to get text address from lat, lng coords.
- */
-function fillOriginInput(geocoder, lat, lng) {
-  const latlng = {
-    lat,
-    lng,
-  }
-
-  // reverse geocode
-  geocoder.geocode({ location: latlng }, (results, status) => {
-    if (status === 'OK') {
-      if (results[0]) {
-        document.getElementById('origin').value = results[0].formatted_address
-      }
-    }
-  })
-}
-
-/*
  * Callback function from DistanceMatrixService which then calculates total cost and builds
  * response div.
  */
