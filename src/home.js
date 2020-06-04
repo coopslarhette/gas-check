@@ -63,13 +63,7 @@ function calcDistance() {
   }, computeCostAndBuildResponse)
 }
 
-/*
- * Initializes map and API elements. Map is centered on US with a country wide zoom level. Called
- * by Google Maps API script at bottom of index.html
- */
-
-// eslint-disable-next-line no-unused-vars
-function initMap() {
+window.onload = () => {
   const directionsDisplay = new google.maps.DirectionsRenderer()
   // need this for autocomplete to work on origin input
   // eslint-disable-next-line no-unused-vars
