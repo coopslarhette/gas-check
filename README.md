@@ -6,9 +6,3 @@ Implemented in plain JavaScript and HTML with Bootstrap and a little custom CSS 
 * currently, you will need to enter all the information for it to estimate the cost of the trip, but eventually it will pull data from a few different api's to get mpg and gas price
 
 * its biggest weakness is that it doesn't model real world gas usage all that well, relying on one MPG number to calcualate gas use rate.
-
-## Screenshots
-
-![mobile](img/mobile-screenshot.png)
-
-![desktop](img/desktop-screenshot.png)
