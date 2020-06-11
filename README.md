@@ -9,6 +9,6 @@ Implemented in plain JavaScript and HTML with Bootstrap and a little custom CSS 
 
 ## Screenshots
 
-[mobile]: img/mobile-screenshot.png
+![mobile](img/mobile-screenshot.png)
 
-[desktop]: img/desktop-screenshot.png
+![desktop](img/desktop-screenshot.png)
