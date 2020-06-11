@@ -1,5 +1,5 @@
 # Gauge
-A fairly simple web app to estimate gas cost when driving from point A to B. Uses Google Maps JavaScript API to find the fastest route using current conditions and calculates the distance of that route. It then calculates the cost of trip based on how much gas it thinks the trip will use. 
+A fairly simple web app to estimate cost of gas used whilst driving from point A to B. Uses Google Maps JavaScript API to find the fastest route using current conditions and calculates the distance of that route. It then calculates the cost of trip based on how much gas it thinks the trip will use. 
 
 Implemented in plain JavaScript and HTML with Bootstrap and a little custom CSS for styling.
 
