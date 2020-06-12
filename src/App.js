@@ -6,20 +6,21 @@ import GaugeNavBar from './GaugeNavBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InputOutputArea from './InputOutputArea'
 import Map from './Map'
+import Row from 'react-bootstrap/Row'
 
 function App() {
   return (
     <div className="App">
       <Container>
-        <GaugeNavBar/>
-        <div id="flex">
+        <GaugeNavBar />
+        <Row className="interactionSpace">
           <Col sm={7}>
-            <InputOutputArea/>
+            <InputOutputArea />
           </Col>
-          <Col sm={5}>
-            <Map/>
+          <Col sm={4}>
+            <Map />
           </Col>
-        </div>
+        </Row>
       </Container>
     </div>
   )
