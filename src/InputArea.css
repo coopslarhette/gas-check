@@ -1,0 +1,8 @@
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .inputRow {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+}
