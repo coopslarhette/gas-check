@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import GoogleMapReact from 'google-map-react'
-import useGeolocation from 'react-hook-geolocation'
+import './Map.css'
 
 function Map() {
   const center = {
@@ -11,7 +11,7 @@ function Map() {
   // const geolocation = useGeolocation()
   // useEffect(() => [center.lat, center.lng] = [geolocation.latitude, geolocation.longitude])
   return (
-    <div style={{ width: 400, height: 400 }}>
+    <div className="map">
       <GoogleMapReact
         bootstrapURLKeys={['AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg']}
         zoom={3}

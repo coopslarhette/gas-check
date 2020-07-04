@@ -17,7 +17,7 @@ function App() {
           <Col sm={7}>
             <InputOutputArea />
           </Col>
-          <Col sm={4}>
+          <Col sm={5}>
             <Map />
           </Col>
         </Row>
