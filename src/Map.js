@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import GoogleMapReact from 'google-map-react'
 import useGeolocation from 'react-hook-geolocation'
 

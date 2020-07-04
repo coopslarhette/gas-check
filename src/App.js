@@ -2,11 +2,11 @@ import React from 'react'
 import './App.css'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import GaugeNavBar from './GaugeNavBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import InputOutputArea from './InputOutputArea'
 import Map from './Map'
-import Row from 'react-bootstrap/Row'
 
 function App() {
   return (

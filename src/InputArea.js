@@ -17,9 +17,8 @@ function InputArea() {
   const validateChange = (formIdentifier, isValid) => {
     validators[formIdentifier] = isValid
     // TODO may be a better/more reacty place to put this
-    if (validators.origin && validators.origin && validators.gasCost && validators.mpg) {
-      buttonNodeRef.disabled = false
-    }
+    buttonNodeRef.disabled = !(validators.origin && validators.origin && validators.gasCost
+      && validators.mpg)
   }
 
   return (
@@ -72,7 +71,7 @@ function InputArea() {
         }}
         disabled
       >
-        Compute!
+        Compute Cost!
       </Button>
     </div>
   )
