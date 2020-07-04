@@ -6,13 +6,13 @@ import FormControl from 'react-bootstrap/FormControl'
 function InputTemplate(props) {
   const {
     // TODO maybe switch to TS to avoid this
-    // eslint-disable-next-line react/prop-types
+    // eslint-disable-nexxt-line react/prop-types
     placeholder, prepend, validationRegex, formIdentifier,
   } = props
   let inputFormNode
 
   return (
-    <InputGroup style={{ 30, marginTop: 10 }} className="mb-3">
+    <InputGroup style={{ marginLeft: 30, marginTop: 10 }} className="mb-3">
       <InputGroup.Prepend>
         <InputGroup.Text id="basic-addon1">{prepend}</InputGroup.Text>
       </InputGroup.Prepend>

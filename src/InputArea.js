@@ -64,7 +64,7 @@ function InputArea() {
       <Button
         size="lg"
         bsClass="custom-btn"
-        style={{ '#53afed', border: '1 px #53afed', color: 'black' }}
+        style={{ background: '#53afed', border: '1 px #53afed', color: 'black' }}
         ref={(ref) => {
           // eslint-disable-next-line no-param-reassign
           buttonNodeRef = ref
