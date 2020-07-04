@@ -13,7 +13,7 @@ function Map() {
   return (
     <div style={{ width: 400, height: 400 }}>
       <GoogleMapReact
-        bootstrapURLKeys={ ['AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg']}
+        bootstrapURLKeys={['AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg']}
         zoom={3}
         center={center}
         yesIWantToUseGoogleMapApiInternals
