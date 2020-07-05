@@ -22,8 +22,8 @@ function InputArea() {
   }
 
   return (
-    <div>
-      <Row className="flex-block">
+    <div className="flex-block">
+      <Row>
         <div className="inputRow">
           <InputTemplate
             placeholder="Enter your origin."
