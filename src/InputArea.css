@@ -1,13 +1,18 @@
-/*Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) {
+.inputRow {
+    width: 80%;
+}
+
+@media (max-width: 575px) {
+    .row {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (min-width: 576px) {
     .inputRow {
         display: flex;
         flex-direction: row;
         width: 100%;
     }
 }
-
-/*.row {*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*}*/
