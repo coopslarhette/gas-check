@@ -13,6 +13,8 @@ function App() {
     <div className="App">
       <Container>
         <GaugeNavBar />
+        {/* ideally we want this to wrap the map to the bottom aat 768px width as that's the
+        smallest width the input boxes still render nicely at will fix later probably */}
         <Row className="interactionSpace">
           <Col sm={7}>
             <InputOutputArea />
