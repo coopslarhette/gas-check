@@ -63,7 +63,6 @@ function InputArea() {
       </Row>
       <Button
         size="lg"
-        bsClass="custom-btn"
         style={{
           background: '#53afed', border: '1 px #53afed', color: 'black', marginBottom: '15px',
         }}
