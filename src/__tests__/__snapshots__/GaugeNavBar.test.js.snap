@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component renders all parts correctly 1`] = `
+<div
+  className="GaugeNavBar"
+>
+  <nav
+    className="navbar navbar-expand navbar-light"
+  >
+    <a
+      className="navbar-brand"
+      href="https://coopslarhette.github.io/gauge/"
+    >
+      Gauge
+    </a>
+    <div
+      className="ml-auto"
+    >
+      <a
+        href="https://github.com/coopslarhette"
+      >
+        <img
+          alt="github page"
+          src="../public/github-logo.png"
+        />
+      </a>
+    </div>
+  </nav>
+</div>
+`;
+
+exports[`Nav bar component renders all parts correctly 1`] = `
+<div
+  className="GaugeNavBar"
+>
+  <nav
+    className="navbar navbar-expand navbar-light"
+  >
+    <a
+      className="navbar-brand"
+      href="https://coopslarhette.github.io/gauge/"
+    >
+      Gauge
+    </a>
+    <div
+      className="ml-auto"
+    >
+      <a
+        href="https://github.com/coopslarhette"
+      >
+        <img
+          alt="github page"
+          src="../public/github-logo.png"
+        />
+      </a>
+    </div>
+  </nav>
+</div>
+`;
