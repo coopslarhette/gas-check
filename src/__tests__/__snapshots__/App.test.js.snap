@@ -1,0 +1,230 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders all parts correctly 1`] = `
+<div
+  className="App"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="GaugeNavBar"
+    >
+      <nav
+        className="navbar navbar-expand navbar-light"
+      >
+        <a
+          className="navbar-brand"
+          href="https://coopslarhette.github.io/gauge/"
+        >
+          Gauge
+        </a>
+        <div
+          className="ml-auto"
+        >
+          <a
+            href="https://github.com/coopslarhette"
+          >
+            <img
+              alt="github page"
+              src="../public/github-logo.png"
+            />
+          </a>
+        </div>
+      </nav>
+    </div>
+    <div
+      className="interactionSpace row"
+    >
+      <div
+        className="col-sm-7"
+      >
+        <div>
+          <div
+            className="flex-block"
+          >
+            <div
+              className="row"
+            >
+              <div
+                className="inputRow"
+              >
+                <div
+                  className="mb-3 input-group input-group"
+                >
+                  <div
+                    className="input-group-prepend"
+                  >
+                    <span
+                      className="input-group-text"
+                      id="basic-addon1"
+                    >
+                      A
+                    </span>
+                  </div>
+                  <input
+                    aria-describedby="basic-addon1"
+                    aria-label="Input"
+                    className="form-control"
+                    onChange={[Function]}
+                    placeholder="Enter your origin."
+                  />
+                </div>
+                <div
+                  className="mb-3 input-group input-group"
+                >
+                  <div
+                    className="input-group-prepend"
+                  >
+                    <span
+                      className="input-group-text"
+                      id="basic-addon1"
+                    >
+                      B
+                    </span>
+                  </div>
+                  <input
+                    aria-describedby="basic-addon1"
+                    aria-label="Input"
+                    className="form-control"
+                    onChange={[Function]}
+                    placeholder="Enter your destination."
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              className="row"
+            >
+              <div
+                className="inputRow"
+              >
+                <div
+                  className="mb-3 input-group input-group"
+                >
+                  <div
+                    className="input-group-prepend"
+                  >
+                    <span
+                      className="input-group-text"
+                      id="basic-addon1"
+                    >
+                      $
+                    </span>
+                  </div>
+                  <input
+                    aria-describedby="basic-addon1"
+                    aria-label="Input"
+                    className="form-control"
+                    onChange={[Function]}
+                    placeholder="Enter local cost of gas here."
+                  />
+                </div>
+                <div
+                  className="mb-3 input-group input-group"
+                >
+                  <div
+                    className="input-group-prepend"
+                  >
+                    <span
+                      className="input-group-text"
+                      id="basic-addon1"
+                    >
+                      η
+                    </span>
+                  </div>
+                  <input
+                    aria-describedby="basic-addon1"
+                    aria-label="Input"
+                    className="form-control"
+                    onChange={[Function]}
+                    placeholder="Enter you car's mpg here."
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              className="btn btn-primary btn-lg"
+              disabled={true}
+              style={
+                Object {
+                  "background": "#53afed",
+                  "border": "1 px #53afed",
+                  "color": "black",
+                  "marginBottom": "15px",
+                }
+              }
+              type="button"
+            >
+              Compute Cost!
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-sm-5"
+      >
+        <div
+          className="map"
+        >
+          <div
+            onClick={[Function]}
+            onMouseDownCapture={[Function]}
+            onMouseMove={[Function]}
+            style={
+              Object {
+                "height": "100%",
+                "margin": 0,
+                "padding": 0,
+                "position": "relative",
+                "width": "100%",
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "height": "100%",
+                  "left": 0,
+                  "margin": 0,
+                  "padding": 0,
+                  "position": "absolute",
+                  "top": 0,
+                  "width": "100%",
+                }
+              }
+            />
+            <div
+              style={
+                Object {
+                  "height": "50%",
+                  "left": "50%",
+                  "margin": 0,
+                  "padding": 0,
+                  "position": "absolute",
+                  "top": "50%",
+                  "width": "50%",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "height": "100%",
+                    "left": 0,
+                    "margin": 0,
+                    "padding": 0,
+                    "position": "absolute",
+                    "top": 0,
+                    "width": "100%",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
