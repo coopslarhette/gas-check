@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input template component renders all parts correctly 1`] = `
+<div
+  className="mb-3 input-group input-group"
+>
+  <div
+    className="input-group-prepend"
+  >
+    <span
+      className="input-group-text"
+      id="basic-addon1"
+    />
+  </div>
+  <input
+    aria-describedby="basic-addon1"
+    aria-label="Input"
+    className="form-control"
+    onChange={[Function]}
+  />
+</div>
+`;
