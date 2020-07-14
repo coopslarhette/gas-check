@@ -64,7 +64,7 @@ function InputArea() {
       <Button
         size="lg"
         style={{
-          background: '#53afed', border: '1 px #53afed', color: 'black', marginBottom: '15px',
+          '#53afed', border: '1 px #53afed', color: 'black', marginBottom: '15px',
         }}
         ref={(ref) => {
           // eslint-disable-next-line no-param-reassign
