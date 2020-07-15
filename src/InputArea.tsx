@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import InputTemplate from './InputTemplate'
 
-function InputArea() {
+function InputArea(): JSX.Element {
   const validators = {
     origin: false,
     destination: false,
@@ -14,7 +14,7 @@ function InputArea() {
 
   let buttonNodeRef
 
-  const validateChange = (formIdentifier, isValid) => {
+  const validateChange = (formIdentifier: string, isValid: boolean): void => {
     validators[formIdentifier] = isValid
     // TODO may be a better/more reacty place to put this
     buttonNodeRef.disabled = !(validators.origin && validators.origin && validators.gasCost
@@ -44,7 +44,6 @@ function InputArea() {
       <Row>
         <div className="inputRow">
           <InputTemplate
-            class="input"
             placeholder="Enter local cost of gas here."
             prepend="$"
             isValidInput={validateChange}
@@ -52,7 +51,6 @@ function InputArea() {
             formIdentifier="gasCost"
           />
           <InputTemplate
-            class="input"
             placeholder="Enter you car's mpg here."
             prepend="η"
             isValidInput={validateChange}
@@ -64,10 +62,9 @@ function InputArea() {
       <Button
         size="lg"
         style={{
-          '#53afed', border: '1 px #53afed', color: 'black', marginBottom: '15px',
+          background: '#53afed', border: '1 px #53afed', color: 'black', marginBottom: '15px',
         }}
-        ref={(ref) => {
-          // eslint-disable-next-line no-param-reassign
+        ref={(ref): void => {
           buttonNodeRef = ref
         }}
         disabled

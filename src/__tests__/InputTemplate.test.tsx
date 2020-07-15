@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import renderer from 'react-test-renderer'
-import { fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import InputTemplate from '../InputTemplate'
 
 describe('Input template component', () => {
-  let validateChange = null
-  let validity = null
+  let validateChange: (string, boolean) => void
+  let validity: boolean
   beforeEach(() => {
-    validateChange = (_, isValid) => {
+    validateChange = (_: string, isValid: boolean): void => {
       validity = isValid
     }
   })
@@ -27,7 +27,13 @@ describe('Input template component', () => {
 
   it('renders all parts correctly', () => {
     const tree = renderer
-      .create(<InputTemplate />)
+      .create(<InputTemplate
+        placeholder="Test"
+        prepend="A"
+        isValidInput={validateChange}
+        validationRegex={/.*/}
+        formIdentifier="test"
+      />)
       .toJSON()
     expect(tree).toMatchSnapshot()
   })

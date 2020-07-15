@@ -3,7 +3,7 @@ import './GaugeNavBar.css'
 import Navbar from 'react-bootstrap/Navbar'
 import NavbarBrand from 'react-bootstrap/NavbarBrand'
 
-function GaugeNavBar() {
+function GaugeNavBar(): JSX.Element {
   return (
     <div className="GaugeNavBar">
       <Navbar>

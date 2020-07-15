@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import InputOutputArea from './InputOutputArea'
 import Map from './Map'
 
-function App() {
+function App(): JSX.Element {
   return (
     <div className="App">
       <Container>

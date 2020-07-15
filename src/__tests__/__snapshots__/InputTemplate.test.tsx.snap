@@ -10,13 +10,16 @@ exports[`Input template component renders all parts correctly 1`] = `
     <span
       className="input-group-text"
       id="basic-addon1"
-    />
+    >
+      A
+    </span>
   </div>
   <input
     aria-describedby="basic-addon1"
     aria-label="Input"
     className="form-control"
     onChange={[Function]}
+    placeholder="Test"
   />
 </div>
 `;

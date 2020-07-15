@@ -3,10 +3,11 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import './InputTemplate.css'
 
-function InputTemplate(props) {
+function InputTemplate(props: {
+  placeholder: string; prepend: string; validationRegex: RegExp;
+  formIdentifier: string; isValidInput: (string, boolean) => void;
+}): JSX.Element {
   const {
-    // TODO maybe switch to TS to avoid this
-    // eslint-disable-next-line react/prop-types
     placeholder, prepend, validationRegex, formIdentifier,
   } = props
   let inputFormNode
@@ -23,8 +24,7 @@ function InputTemplate(props) {
         ref={(ref) => {
           inputFormNode = ref
         }}
-        onChange={() => {
-          // eslint-disable-next-line react/prop-types
+        onChange={(): void => {
           props.isValidInput(formIdentifier, validationRegex.test(inputFormNode.value))
         }}
       />
