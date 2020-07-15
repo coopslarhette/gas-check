@@ -62,7 +62,7 @@ function InputArea(): JSX.Element {
       <Button
         size="lg"
         style={{
-          background: '#53afed', border: '1 px #53afed', color: 'black', marginBottom: '15px',
+          background: '#53afed', border: '1 px #53afed', color: 'black', margin: '25px',
         }}
         ref={(ref): void => {
           buttonNodeRef = ref

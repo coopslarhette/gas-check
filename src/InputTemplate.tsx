@@ -13,7 +13,7 @@ function InputTemplate(props: {
   let inputFormNode
 
   return (
-    <InputGroup className="mb-3 input-group">
+    <InputGroup className="mb-3">
       <InputGroup.Prepend>
         <InputGroup.Text id="basic-addon1">{prepend}</InputGroup.Text>
       </InputGroup.Prepend>
