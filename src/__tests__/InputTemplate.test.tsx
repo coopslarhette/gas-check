@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import renderer from 'react-test-renderer'
 import { render } from '@testing-library/react'
 import InputTemplate from '../InputTemplate'
@@ -7,14 +7,22 @@ import InputTemplate from '../InputTemplate'
 describe('Input template component', () => {
   let validateChange: (string, boolean) => void
   let validity: boolean
+  let div: HTMLDivElement
+
   beforeEach(() => {
+    div = document.createElement('div')
+    document.body.appendChild(div)
     validateChange = (_: string, isValid: boolean): void => {
       validity = isValid
     }
   })
 
+  afterEach(() => {
+    unmountComponentAtNode(div)
+    div.remove()
+  })
+
   it('renders without crashing', () => {
-    const div = document.createElement('div')
     ReactDOM.render(<InputTemplate
       placeholder="Test"
       prepend="A"
@@ -39,7 +47,6 @@ describe('Input template component', () => {
   })
 
   it('calls on function in isValidInput with a false boolean when input is empty', () => {
-    const div = document.createElement('div')
     ReactDOM.render(<InputTemplate
       placeholder="Test"
       prepend="A"
@@ -52,6 +59,7 @@ describe('Input template component', () => {
     ReactDOM.unmountComponentAtNode(div)
   })
 
+  // replace with act()
   const setup = () => {
     const utils = render(<InputTemplate
       placeholder="Test"
