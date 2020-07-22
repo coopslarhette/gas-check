@@ -2,7 +2,7 @@
 
 exports[`Input template component renders all parts correctly 1`] = `
 <div
-  className="mb-3 input-group input-group"
+  className="mb-3 input-group"
 >
   <div
     className="input-group-prepend"

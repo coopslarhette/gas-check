@@ -50,7 +50,7 @@ exports[`App component renders all parts correctly 1`] = `
                 className="inputRow"
               >
                 <div
-                  className="mb-3 input-group input-group"
+                  className="mb-3 input-group"
                 >
                   <div
                     className="input-group-prepend"
@@ -71,7 +71,7 @@ exports[`App component renders all parts correctly 1`] = `
                   />
                 </div>
                 <div
-                  className="mb-3 input-group input-group"
+                  className="mb-3 input-group"
                 >
                   <div
                     className="input-group-prepend"
@@ -100,7 +100,7 @@ exports[`App component renders all parts correctly 1`] = `
                 className="inputRow"
               >
                 <div
-                  className="mb-3 input-group input-group"
+                  className="mb-3 input-group"
                 >
                   <div
                     className="input-group-prepend"
@@ -121,7 +121,7 @@ exports[`App component renders all parts correctly 1`] = `
                   />
                 </div>
                 <div
-                  className="mb-3 input-group input-group"
+                  className="mb-3 input-group"
                 >
                   <div
                     className="input-group-prepend"
@@ -151,7 +151,7 @@ exports[`App component renders all parts correctly 1`] = `
                   "background": "#53afed",
                   "border": "1 px #53afed",
                   "color": "black",
-                  "marginBottom": "15px",
+                  "margin": "25px",
                 }
               }
               type="button"
@@ -166,63 +166,7 @@ exports[`App component renders all parts correctly 1`] = `
       >
         <div
           className="map"
-        >
-          <div
-            onClick={[Function]}
-            onMouseDownCapture={[Function]}
-            onMouseMove={[Function]}
-            style={
-              Object {
-                "height": "100%",
-                "margin": 0,
-                "padding": 0,
-                "position": "relative",
-                "width": "100%",
-              }
-            }
-          >
-            <div
-              style={
-                Object {
-                  "height": "100%",
-                  "left": 0,
-                  "margin": 0,
-                  "padding": 0,
-                  "position": "absolute",
-                  "top": 0,
-                  "width": "100%",
-                }
-              }
-            />
-            <div
-              style={
-                Object {
-                  "height": "50%",
-                  "left": "50%",
-                  "margin": 0,
-                  "padding": 0,
-                  "position": "absolute",
-                  "top": "50%",
-                  "width": "50%",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "height": "100%",
-                    "left": 0,
-                    "margin": 0,
-                    "padding": 0,
-                    "position": "absolute",
-                    "top": 0,
-                    "width": "100%",
-                  }
-                }
-              />
-            </div>
-          </div>
-        </div>
+        />
       </div>
     </div>
   </div>
