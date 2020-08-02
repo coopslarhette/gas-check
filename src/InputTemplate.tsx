@@ -5,7 +5,8 @@ import './InputTemplate.css'
 
 function InputTemplate(props: {
   placeholder: string; prepend: string; validationRegex: RegExp;
-  formIdentifier: string; isValidInput: (string, boolean) => void;
+  formIdentifier: string; validateChange: (string, boolean) => void;
+  storeInputValue: (formValue: string, formIdentifier: string) => void;
 }): JSX.Element {
   const {
     placeholder, prepend, validationRegex, formIdentifier,
@@ -25,7 +26,8 @@ function InputTemplate(props: {
           inputFormNode = ref
         }}
         onChange={(): void => {
-          props.isValidInput(formIdentifier, validationRegex.test(inputFormNode.value))
+          props.validateChange(formIdentifier, validationRegex.test(inputFormNode.value))
+          props.storeInputValue(inputFormNode.value, formIdentifier)
         }}
       />
     </InputGroup>
