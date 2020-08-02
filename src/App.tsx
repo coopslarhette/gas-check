@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './App.css'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -8,34 +8,55 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Map from './Map'
 import InputArea from './InputArea'
 
-function App(): JSX.Element {
-  let request: { origin: string; destination: string; travelMode: string } | null = null
+type MyState = {
+  origin: string; destination: string; mpg: number; gasPrice: number;
+}
 
-  const startMapRequest = (origin: string, destination: string): void => {
-    request = {
-      origin,
-      destination,
-      travelMode: 'DRIVING',
+class App extends Component<{}, MyState> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      // eslint-disable-next-line react/no-unused-state
+      origin: '', destination: '', mpg: 0, gasPrice: 0,
     }
+    this.handleComputeRequest = this.handleComputeRequest.bind(this)
   }
-  return (
-    <div className="App">
-      <Container>
-        <GaugeNavBar />
-        {/* ideally we want this to wrap the map to the bottom aat 768px width as that's the
-        smallest width the input boxes still render nicely at TODO will fix later probably */}
-        <Row className="interactionSpace">
-          <Col sm={7}>
-            <InputArea handleClick={startMapRequest} />
-            {/*  output area */}
-          </Col>
-          <Col sm={5}>
-            <Map request={request} />
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  )
+
+  handleComputeRequest(inputInfo: {
+    origin: string; destination: string; mpg: number;
+    gasPrice: number;
+  }): void {
+    this.setState({
+      origin: inputInfo.origin,
+      destination: inputInfo.destination,
+      mpg: inputInfo.mpg,
+      gasPrice: inputInfo.gasPrice,
+    })
+  }
+
+  render(): JSX.Element {
+    // eslint-disable-next-line react/destructuring-assignment
+    return (
+      <div className="App">
+        <Container>
+          <GaugeNavBar />
+          {/* ideally we want this to wrap the map to the bottom aat 768px width as that's the
+        smallest width the input boxes still render nicely at TODO will fix later probably ;) */}
+          <Row className="interactionSpace">
+            <Col sm={7}>
+              <InputArea handleClick={this.handleComputeRequest} />
+              {/*  output area */}
+            </Col>
+            <Col sm={5}>
+              <Map
+                request={{ origin: this.state.origin, destination: this.state.destination, travelMode: 'DRIVING' }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    )
+  }
 }
 
 export default App
