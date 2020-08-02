@@ -1,17 +1,23 @@
-import React from 'react'
+/* global google */
+import React, { Component } from 'react'
 import './Map.css'
 
-// eslint-disable-next-line react/prefer-stateless-function
-class Map extends React.Component {
+type MyProps = {
+  request: { origin: string; destination: string; travelMode: string };
+};
+
+class Map extends Component<MyProps> {
+  directionsDisplay
+
+  directionsService
+
   componentDidMount(): void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     if (!window.google) {
       const s = document.createElement('script')
       s.type = 'text/javascript'
       s.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg'
       const x = document.getElementsByTagName('script')[0]
-      if (x.parentNode) {
+      if (x && x.parentNode) {
         x.parentNode.insertBefore(s, x)
       }
       // Below is important.
@@ -24,17 +30,13 @@ class Map extends React.Component {
     }
   }
 
+  componentDidUpdate(): void {
+    this.drawPath()
+  }
+
   doInitMapLogic(): void {
-    // eslint-disable-next-line no-undef,@typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    const directionsDisplay = new google.maps.DirectionsRenderer()
-    // need this for autocomplete to work on origin input
-    // const autocompleteOrigin = new google.maps.places.Autocomplete(document.getElementById('origin'ip)
-    // const autocompleteDest = new google.maps.places.Autocomplete(document.getElementById('destination'))
-    // const directionsService = new google.maps.DirectionsService()
-    // const directionsService = new google.maps.DirectionsService()
-    // eslint-disable-next-line no-undef,@typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+    this.directionsDisplay = new google.maps.DirectionsRenderer()
+    this.directionsService = new google.maps.DirectionsService()
     const map = new google.maps.Map(document.getElementsByClassName('map')[0], {
       center: {
         lat: 39.956813,
@@ -42,31 +44,25 @@ class Map extends React.Component {
       },
       zoom: 3,
     })
-    directionsDisplay.setMap(map)
+    this.directionsDisplay.setMap(map)
+  }
+
+  drawPath(): void {
+    const { request } = this.props
+    this.directionsService.route(request, (response, status) => {
+      if (status === 'OK') {
+        this.directionsDisplay.setDirections(response)
+      } else if (status === 'NOT_FOUND' || status === 'ZERO_RESULTS') {
+        // eslint-disable-next-line no-alert
+        alert('One of your addresses could not be found, please try again.')
+      } else {
+        // eslint-disable-next-line no-alert
+        alert('Something went wrong, please try again later.')
+      } // need to figure out better handling of this methinks
+    })
   }
 
   render(): JSX.Element {
-    // useEffect(() => {
-    //   const googleMapsUrl = 'https://maps.google.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg'
-    //
-    //   if (!document.querySelectorAll(`[src="${googleMapsUrl}"]`).length) {
-    //     document.body.appendChild(Object.assign(
-    //       document.createElement('script'), {
-    //         type: 'text/javascript',
-    //         src: googleMapsUrl,
-    //         onload: () => doInitMapLogic(),
-    //       },
-    //     ))
-    //     const s = document.createElement('script')
-    //     const x = document.getElementsByTagName('script')[0]
-    //     if (x.parentNode != null) {
-    //       x.parentNode.insertBefore(s, x)
-    //     }
-    //   } else {
-    //     doInitMapLogic()
-    //   }
-    // })
-
     return (
       <div className="map" />
     )
