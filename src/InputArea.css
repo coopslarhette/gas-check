@@ -2,6 +2,13 @@
     width: 80%;
 }
 
+button {
+    background: #53afed;
+    border: 1px #53afed;
+    color: black;
+    margin: 25px;
+}
+
 @media (max-width: 575px) {
     .row {
         justify-content: center;

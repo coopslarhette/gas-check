@@ -1,24 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './InputArea.css'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import InputTemplate from './InputTemplate'
 
-function InputArea(): JSX.Element {
-  const validators = {
+function InputArea(props: {
+  handleClick: (inputInfo: {
+    origin: string; destination: string; mpg: number; gasPrice: number;
+  }) => void;
+}): JSX.Element {
+  const [validators, setValidators] = useState({
     origin: false,
     destination: false,
-    gasCost: false,
+    gasPrice: false,
     mpg: false,
-  }
+  })
+
+  const [inputValues, setInputValues] = useState({
+    origin: '',
+    destination: '',
+    mpg: 0,
+    gasPrice: 0,
+  })
 
   let buttonNodeRef
 
-  const validateChange = (formIdentifier: string, isValid: boolean): void => {
-    validators[formIdentifier] = isValid
-    // TODO may be a better/more reacty place to put this
-    buttonNodeRef.disabled = !(validators.origin && validators.origin && validators.gasCost
+  useEffect(() => {
+    buttonNodeRef.disabled = !(validators.origin && validators.origin && validators.gasPrice
       && validators.mpg)
+  })
+
+  const storeValidity = (formIdentifier: string, isValid: boolean): void => {
+    setValidators({ ...validators, [formIdentifier]: isValid })
+  }
+
+  const storeInputValue = (formValue: number | string, formIdentifier: string): void => {
+    setInputValues({ ...inputValues, [formIdentifier]: formValue })
   }
 
   return (
@@ -28,14 +45,16 @@ function InputArea(): JSX.Element {
           <InputTemplate
             placeholder="Enter your origin."
             prepend="A"
-            isValidInput={validateChange}
+            validateChange={storeValidity}
+            storeInputValue={storeInputValue}
             validationRegex={/[a-z0-9]+/i}
             formIdentifier="origin"
           />
           <InputTemplate
             placeholder="Enter your destination."
             prepend="B"
-            isValidInput={validateChange}
+            validateChange={storeValidity}
+            storeInputValue={storeInputValue}
             validationRegex={/[a-z0-9]+/i}
             formIdentifier="destination"
           />
@@ -46,14 +65,16 @@ function InputArea(): JSX.Element {
           <InputTemplate
             placeholder="Enter local cost of gas here."
             prepend="$"
-            isValidInput={validateChange}
+            validateChange={storeValidity}
+            storeInputValue={storeInputValue}
             validationRegex={/^\d(\.\d{1,2})?$/}
-            formIdentifier="gasCost"
+            formIdentifier="gasPrice"
           />
           <InputTemplate
             placeholder="Enter you car's mpg here."
             prepend="η"
-            isValidInput={validateChange}
+            validateChange={storeValidity}
+            storeInputValue={storeInputValue}
             validationRegex={/^\d{1,3}(\.\d+)?$/}
             formIdentifier="mpg"
           />
@@ -61,13 +82,10 @@ function InputArea(): JSX.Element {
       </Row>
       <Button
         size="lg"
-        style={{
-          background: '#53afed', border: '1 px #53afed', color: 'black', margin: '25px',
-        }}
         ref={(ref): void => {
           buttonNodeRef = ref
         }}
-        disabled
+        onClick={(): void => props.handleClick(inputValues)}
       >
         Compute Cost!
       </Button>
