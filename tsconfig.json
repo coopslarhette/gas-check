@@ -6,8 +6,9 @@
     "target": "es2015",
     "jsx": "react",
     "types": [
-      "react",
-      "jest"
+      "jest",
+      "googlemaps",
+      "react"
     ],
     "module": "esNext",
     "moduleResolution": "node",
@@ -35,7 +36,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
   },
   "exclude": [
     "dist",
