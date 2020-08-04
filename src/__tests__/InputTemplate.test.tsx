@@ -5,15 +5,23 @@ import { render } from '@testing-library/react'
 import InputTemplate from '../InputTemplate'
 
 describe('Input template component', () => {
-  let validateChange: (string, boolean) => void
+  let validateChange: (formIdentifier: string, isValid: boolean) => void
   let validity: boolean
   let div: HTMLDivElement
+  let storeInputValue: (formValue: string | number, formIdentifier: string) => void
+  let values: { origin: string, destination: string, mpg: number, gasPrice: number }
 
   beforeEach(() => {
     div = document.createElement('div')
     document.body.appendChild(div)
     validateChange = (_: string, isValid: boolean): void => {
       validity = isValid
+    }
+    values = {
+      origin: '', destination: '', mpg: 0, gasPrice: 0,
+    }
+    storeInputValue = (formValue, formIdentifier) => {
+      values[formIdentifier] = formValue
     }
   })
 
@@ -26,9 +34,10 @@ describe('Input template component', () => {
     ReactDOM.render(<InputTemplate
       placeholder="Test"
       prepend="A"
-      isValidInput={validateChange}
+      validateChange={validateChange}
       validationRegex={/.*/}
       formIdentifier="test"
+      storeInputValue={storeInputValue}
     />, div)
     ReactDOM.unmountComponentAtNode(div)
   })
@@ -38,9 +47,10 @@ describe('Input template component', () => {
       .create(<InputTemplate
         placeholder="Test"
         prepend="A"
-        isValidInput={validateChange}
+        validateChange={validateChange}
         validationRegex={/.*/}
         formIdentifier="test"
+        storeInputValue={storeInputValue}
       />)
       .toJSON()
     expect(tree).toMatchSnapshot()
@@ -50,9 +60,10 @@ describe('Input template component', () => {
     ReactDOM.render(<InputTemplate
       placeholder="Test"
       prepend="A"
-      isValidInput={validateChange}
+      validateChange={validateChange}
       validationRegex={/.+/}
       formIdentifier="test"
+      storeInputValue={storeInputValue}
     />, div)
 
     expect(validity).toBeFalsy()
@@ -64,9 +75,10 @@ describe('Input template component', () => {
     const utils = render(<InputTemplate
       placeholder="Test"
       prepend="A"
-      isValidInput={validateChange}
+      validateChange={validateChange}
       validationRegex={/test/}
       formIdentifier="test"
+      storeInputValue={storeInputValue}
     />)
     console.log(utils.baseElement)
     return utils

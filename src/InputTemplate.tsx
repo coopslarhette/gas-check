@@ -5,7 +5,7 @@ import './InputTemplate.css'
 
 function InputTemplate(props: {
   placeholder: string; prepend: string; validationRegex: RegExp;
-  formIdentifier: string; validateChange: (string, boolean) => void;
+  formIdentifier: string; validateChange: (formIdentifier: string, isValid: boolean) => void;
   storeInputValue: (formValue: string, formIdentifier: string) => void;
 }): JSX.Element {
   const {
