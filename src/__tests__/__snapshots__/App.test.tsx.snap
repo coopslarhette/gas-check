@@ -39,126 +39,117 @@ exports[`App component renders all parts correctly 1`] = `
       <div
         className="col-sm-7"
       >
-        <div>
+        <div
+          className="flex-block"
+        >
           <div
-            className="flex-block"
+            className="row"
           >
             <div
-              className="row"
+              className="inputRow"
             >
               <div
-                className="inputRow"
+                className="mb-3 input-group"
               >
                 <div
-                  className="mb-3 input-group"
+                  className="input-group-prepend"
                 >
-                  <div
-                    className="input-group-prepend"
+                  <span
+                    className="input-group-text"
+                    id="basic-addon1"
                   >
-                    <span
-                      className="input-group-text"
-                      id="basic-addon1"
-                    >
-                      A
-                    </span>
-                  </div>
-                  <input
-                    aria-describedby="basic-addon1"
-                    aria-label="Input"
-                    className="form-control"
-                    onChange={[Function]}
-                    placeholder="Enter your origin."
-                  />
+                    A
+                  </span>
                 </div>
-                <div
-                  className="mb-3 input-group"
-                >
-                  <div
-                    className="input-group-prepend"
-                  >
-                    <span
-                      className="input-group-text"
-                      id="basic-addon1"
-                    >
-                      B
-                    </span>
-                  </div>
-                  <input
-                    aria-describedby="basic-addon1"
-                    aria-label="Input"
-                    className="form-control"
-                    onChange={[Function]}
-                    placeholder="Enter your destination."
-                  />
-                </div>
+                <input
+                  aria-describedby="basic-addon1"
+                  aria-label="Input"
+                  className="form-control"
+                  onChange={[Function]}
+                  placeholder="Enter your origin."
+                />
               </div>
-            </div>
-            <div
-              className="row"
-            >
               <div
-                className="inputRow"
+                className="mb-3 input-group"
               >
                 <div
-                  className="mb-3 input-group"
+                  className="input-group-prepend"
                 >
-                  <div
-                    className="input-group-prepend"
+                  <span
+                    className="input-group-text"
+                    id="basic-addon1"
                   >
-                    <span
-                      className="input-group-text"
-                      id="basic-addon1"
-                    >
-                      $
-                    </span>
-                  </div>
-                  <input
-                    aria-describedby="basic-addon1"
-                    aria-label="Input"
-                    className="form-control"
-                    onChange={[Function]}
-                    placeholder="Enter local cost of gas here."
-                  />
+                    B
+                  </span>
                 </div>
-                <div
-                  className="mb-3 input-group"
-                >
-                  <div
-                    className="input-group-prepend"
-                  >
-                    <span
-                      className="input-group-text"
-                      id="basic-addon1"
-                    >
-                      η
-                    </span>
-                  </div>
-                  <input
-                    aria-describedby="basic-addon1"
-                    aria-label="Input"
-                    className="form-control"
-                    onChange={[Function]}
-                    placeholder="Enter you car's mpg here."
-                  />
-                </div>
+                <input
+                  aria-describedby="basic-addon1"
+                  aria-label="Input"
+                  className="form-control"
+                  onChange={[Function]}
+                  placeholder="Enter your destination."
+                />
               </div>
             </div>
-            <button
-              className="btn btn-primary btn-lg"
-              disabled={true}
-              style={
-                Object {
-                  "background": "#53afed",
-                  "border": "1 px #53afed",
-                  "color": "black",
-                  "margin": "25px",
-                }
-              }
-              type="button"
-            >
-              Compute Cost!
-            </button>
           </div>
+          <div
+            className="row"
+          >
+            <div
+              className="inputRow"
+            >
+              <div
+                className="mb-3 input-group"
+              >
+                <div
+                  className="input-group-prepend"
+                >
+                  <span
+                    className="input-group-text"
+                    id="basic-addon1"
+                  >
+                    $
+                  </span>
+                </div>
+                <input
+                  aria-describedby="basic-addon1"
+                  aria-label="Input"
+                  className="form-control"
+                  onChange={[Function]}
+                  placeholder="Enter local cost of gas here."
+                />
+              </div>
+              <div
+                className="mb-3 input-group"
+              >
+                <div
+                  className="input-group-prepend"
+                >
+                  <span
+                    className="input-group-text"
+                    id="basic-addon1"
+                  >
+                    η
+                  </span>
+                </div>
+                <input
+                  aria-describedby="basic-addon1"
+                  aria-label="Input"
+                  className="form-control"
+                  onChange={[Function]}
+                  placeholder="Enter you car's mpg here."
+                />
+              </div>
+            </div>
+          </div>
+          <button
+            className="btn btn-primary btn-lg"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
+          >
+            Compute Cost!
+          </button>
         </div>
       </div>
       <div
