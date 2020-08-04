@@ -4,7 +4,7 @@ import './Map.css'
 
 type MyProps = {
   request: { origin: string; destination: string; travelMode: string };
-};
+}
 
 class Map extends Component<MyProps> {
   directionsDisplay
@@ -22,7 +22,7 @@ class Map extends Component<MyProps> {
       }
       // Below is important.
       // We cannot access google.maps until it's finished loading
-      s.addEventListener('load', (e) => {
+      s.addEventListener('load', () => {
         this.doInitMapLogic()
       })
     } else {

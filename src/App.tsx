@@ -35,7 +35,7 @@ class App extends Component<{}, MyState> {
   }
 
   render(): JSX.Element {
-    // eslint-disable-next-line react/destructuring-assignment
+    const { origin, destination } = this.state
     return (
       <div className="App">
         <Container>
@@ -49,7 +49,7 @@ class App extends Component<{}, MyState> {
             </Col>
             <Col sm={5}>
               <Map
-                request={{ origin: this.state.origin, destination: this.state.destination, travelMode: 'DRIVING' }}
+                request={{ origin, destination, travelMode: 'DRIVING' }}
               />
             </Col>
           </Row>
