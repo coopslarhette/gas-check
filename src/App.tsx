@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -12,62 +12,53 @@ type MyState = {
   origin: string; destination: string; mpg: number; gasPrice: number;
 }
 
-class App extends Component<{}, MyState> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      // eslint-disable-next-line react/no-unused-state
-      origin: '', destination: '', mpg: 0, gasPrice: 0,
-    }
-    this.handleComputeRequest = this.handleComputeRequest.bind(this)
-  }
+function App() {
+  const [origin, setOrigin] = useState('')
+  const [destination, setDestination] = useState('')
+  const [mpg, setMpg] = useState(0)
+  const [gasPrice, setGasPrice] = useState(0)
 
-  handleComputeRequest(inputInfo: {
+  function handleComputeRequest(inputInfo: {
     origin: string; destination: string; mpg: number;
     gasPrice: number;
   }): void {
-    this.setState({
-      origin: inputInfo.origin,
-      destination: inputInfo.destination,
-      mpg: inputInfo.mpg,
-      gasPrice: inputInfo.gasPrice,
-    })
+    setOrigin(inputInfo.origin)
+    setDestination(inputInfo.destination)
+    setMpg(inputInfo.mpg)
+    setGasPrice(inputInfo.gasPrice)
   }
 
-  buildResultDiv(totalCost: number, duration: string) {
+  function buildResultDiv(totalCost: number, duration: string) {
     // build and insert result div here
   }
 
-  handleComputeResult(distance: number, duration: string) {
-    const totalCost = (distance / this.state.mpg) * this.state.gasPrice
-    this.buildResultDiv(totalCost, duration)
+  function handleComputeResult(distance: number, duration: string) {
+    const totalCost = (distance / mpg) * gasPrice
+    buildResultDiv(totalCost, duration)
   }
 
-  render(): JSX.Element {
-    const { origin, destination } = this.state
-    return (
-      <div className="App">
-        <Container>
-          <GaugeNavBar />
-          {/* ideally we want this to wrap the map to the bottom aat 768px width as that's the
+  return (
+    <div className="App">
+      <Container>
+        <GaugeNavBar />
+        {/* ideally we want this to wrap the map to the bottom aat 768px width as that's the
         smallest width the input boxes still render nicely at TODO will fix later probably ;) */}
-          <Row className="interactionSpace">
-            <Col sm={7}>
-              <InputArea handleClick={this.handleComputeRequest} />
-              {/*  output area */}
-            </Col>
-            <Col sm={5}>
-              <Map
-                origin={origin}
-                destination={destination}
-                handleComputeResult={this.handleComputeResult}
-              />
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    )
-  }
+        <Row className="interactionSpace">
+          <Col sm={7}>
+            <InputArea handleClick={handleComputeRequest} />
+            {/*  output area */}
+          </Col>
+          <Col sm={5}>
+            <Map
+              origin={origin}
+              destination={destination}
+              handleComputeResult={handleComputeResult}
+            />
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  )
 }
 
 export default App
