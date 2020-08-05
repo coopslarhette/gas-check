@@ -34,6 +34,15 @@ class App extends Component<{}, MyState> {
     })
   }
 
+  buildResultDiv(totalCost: number, duration: string) {
+    // build and insert result div here
+  }
+
+  handleComputeResult(distance: number, duration: string) {
+    const totalCost = (distance / this.state.mpg) * this.state.gasPrice
+    this.buildResultDiv(totalCost, duration)
+  }
+
   render(): JSX.Element {
     const { origin, destination } = this.state
     return (
@@ -49,7 +58,9 @@ class App extends Component<{}, MyState> {
             </Col>
             <Col sm={5}>
               <Map
-                request={{ origin, destination, travelMode: 'DRIVING' }}
+                origin={origin}
+                destination={destination}
+                handleComputeResult={this.handleComputeResult}
               />
             </Col>
           </Row>
