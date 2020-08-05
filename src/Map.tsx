@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import './Map.css'
 
 type MyProps = {
-  request: { origin: string; destination: string; travelMode: string };
+  origin: string; destination: string;
+  handleComputeResult: (distance: number, duration: string) => void
 }
 
 class Map extends Component<MyProps> {
@@ -32,6 +33,45 @@ class Map extends Component<MyProps> {
 
   componentDidUpdate(): void {
     this.drawPath()
+    this.callDistanceMatrix()
+  }
+
+  getCostAndTime(response: google.maps.DistanceMatrixResponse, status: string): void {
+    const { handleComputeResult } = this.props
+    if (status === 'OK') {
+      const result = response.rows[0].elements[0]
+      const distance = result.distance.value
+      const duration = result.duration.text
+      console.table([distance, duration])
+      handleComputeResult(distance, duration)
+    }
+  }
+
+  drawPath(): void {
+    const { origin, destination } = this.props
+    this.directionsService.route({ origin, destination, travelMode: 'DRIVING' }, (response, status) => {
+      if (status === 'OK') {
+        this.directionsDisplay.setDirections(response)
+      } else if (status === 'NOT_FOUND' || status === 'ZERO_RESULTS') {
+        // eslint-disable-next-line no-alert
+        alert('One of your addresses could not be found, please try again.')
+      } else {
+        // eslint-disable-next-line no-alert
+        alert('Something went wrong, please try again later.')
+      } // need to figure out better handling of this methinks
+    })
+  }
+
+  callDistanceMatrix(): void {
+    const { origin, destination } = this.props
+    const service = new google.maps.DistanceMatrixService()
+    service.getDistanceMatrix({
+      origins: [origin],
+      destinations: [destination],
+      // @ts-ignore
+      travelMode: 'DRIVING',
+      unitSystem: google.maps.UnitSystem.IMPERIAL,
+    }, this.getCostAndTime)
   }
 
   doInitMapLogic(): void {
@@ -45,21 +85,6 @@ class Map extends Component<MyProps> {
       zoom: 3,
     })
     this.directionsDisplay.setMap(map)
-  }
-
-  drawPath(): void {
-    const { request } = this.props
-    this.directionsService.route(request, (response, status) => {
-      if (status === 'OK') {
-        this.directionsDisplay.setDirections(response)
-      } else if (status === 'NOT_FOUND' || status === 'ZERO_RESULTS') {
-        // eslint-disable-next-line no-alert
-        alert('One of your addresses could not be found, please try again.')
-      } else {
-        // eslint-disable-next-line no-alert
-        alert('Something went wrong, please try again later.')
-      } // need to figure out better handling of this methinks
-    })
   }
 
   render(): JSX.Element {
