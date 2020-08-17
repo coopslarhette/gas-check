@@ -17,6 +17,7 @@ function App() {
   const [destination, setDestination] = useState('')
   const [mpg, setMpg] = useState(0)
   const [gasPrice, setGasPrice] = useState(0)
+  const [resultComponent, setResultComponent] = useState((<div />))
 
   function handleComputeRequest(inputInfo: {
     origin: string; destination: string; mpg: number;
@@ -28,14 +29,18 @@ function App() {
     setGasPrice(inputInfo.gasPrice)
   }
 
-  function buildResultDiv(totalCost: number, duration: string) {
-    // build and insert result div here
-  }
-
-  function handleComputeResult(distance: number, duration: string) {
+  function generateResultDiv(distance: number, duration: string): void {
     const totalCost = (distance / mpg) * gasPrice
-    buildResultDiv(totalCost, duration)
-  }
+    const result = (
+      <div className="result-div">
+        <h4>
+          Your trip will use approximately {totalCost} worth of gas and should take
+          about {duration}.
+        </h4>
+      </div>
+    )
+      setResultComponent(result)
+    }
 
   return (
     <div className="App">
@@ -46,13 +51,13 @@ function App() {
         <Row className="interactionSpace">
           <Col sm={7}>
             <InputArea handleClick={handleComputeRequest} />
-            {/*  output area */}
+            {resultComponent}
           </Col>
           <Col sm={5}>
             <Map
               origin={origin}
               destination={destination}
-              handleComputeResult={handleComputeResult}
+              handleComputeResult={generateResultDiv}
             />
           </Col>
         </Row>
