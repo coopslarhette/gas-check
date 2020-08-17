@@ -34,13 +34,16 @@ function App() {
     const result = (
       <div className="result-div">
         <h4>
-          Your trip will use approximately {totalCost} worth of gas and should take
-          about {duration}.
+          Your trip will use approximately
+          {totalCost}
+          worth of gas and should take about
+          {duration}
+          .
         </h4>
       </div>
     )
-      setResultComponent(result)
-    }
+    setResultComponent(result)
+  }
 
   return (
     <div className="App">
