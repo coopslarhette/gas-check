@@ -151,6 +151,7 @@ exports[`App component renders all parts correctly 1`] = `
             Compute Cost!
           </button>
         </div>
+        <div />
       </div>
       <div
         className="col-sm-5"
