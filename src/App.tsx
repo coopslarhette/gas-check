@@ -8,10 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Map from './Map'
 import InputArea from './InputArea'
 
-type MyState = {
-  origin: string; destination: string; mpg: number; gasPrice: number;
-}
-
 function App() {
   const [origin, setOrigin] = useState('')
   const [destination, setDestination] = useState('')
