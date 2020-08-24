@@ -20,8 +20,8 @@ class Map extends Component<MyProps> {
   }
 
   componentDidUpdate(): void {
-    this.drawPathOnMap()
     this.callDistanceMatrix()
+    this.drawPathOnMap()
   }
 
   attachMapsScript(): void {
@@ -52,11 +52,19 @@ class Map extends Component<MyProps> {
       // @ts-ignore
       travelMode: 'DRIVING',
     }
+    const map = new google.maps.Map(document.getElementsByClassName('map')[0], {
+      center: {
+        lat: 39.956813,
+        lng: -102.011721,
+      },
+      zoom: 3,
+    })
 
     directionsService.route(
       request, (response: google.maps.DirectionsResult, status: string) => {
         if (status === 'OK') {
           this.directionsDisplay.setDirections(response)
+          this.directionsDisplay.setMap(map)
         } else if (status === 'NOT_FOUND' || status === 'ZERO_RESULTS') {
           // eslint-disable-next-line no-alert
           alert('One of your addresses could not be found, please try again.')
