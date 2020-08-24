@@ -3,6 +3,7 @@ import './App.css'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Alert from 'react-bootstrap/Alert'
 import GaugeNavBar from './GaugeNavBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Map from './Map'
@@ -25,20 +26,20 @@ function App() {
     setGasPrice(inputInfo.gasPrice)
   }
 
+  /* eslint-disable react/jsx-one-expression-per-line */
   function generateResultDiv(distance: number, duration: string): void {
-    const totalCost = (distance / mpg) * gasPrice
-    const result = (
-      <div className="result-div">
+    const metersToMilesConversion = 0.000621371
+    const distanceInMiles = distance * metersToMilesConversion
+    const totalCost = Math.round((distanceInMiles / mpg) * gasPrice)
+    const component = (
+      <Alert variant="success" className="result-div">
         <h4>
-          Your trip will use approximately
-          {totalCost}
-          worth of gas and should take about
-          {duration}
-          .
+          {/* eslint-disable-next-line max-len */}
+          Your trip will use approximately ${totalCost} worth of gas and should take about {duration}.
         </h4>
-      </div>
+      </Alert>
     )
-    setResultComponent(result)
+    setResultComponent(component)
   }
 
   return (
