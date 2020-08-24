@@ -10,14 +10,17 @@ type MyProps = {
 class Map extends Component<MyProps> {
   directionsDisplay
 
-  directionsService
-
   componentDidMount(): void {
     this.attachMapsScript()
   }
 
+  shouldComponentUpdate(nextProps: Readonly<MyProps>): boolean {
+    const { origin, destination } = this.props
+    return origin !== nextProps.origin || destination !== nextProps.destination
+  }
+
   componentDidUpdate(): void {
-    this.drawPath()
+    this.drawPathOnMap()
     this.callDistanceMatrix()
   }
 
@@ -40,16 +43,17 @@ class Map extends Component<MyProps> {
     }
   }
 
-  drawPath(): void {
+  drawPathOnMap(): void {
+    const directionsService = new google.maps.DirectionsService()
     const { origin, destination } = this.props
-    const request = {
+    const request: google.maps.DirectionsRequest = {
       origin,
       destination,
+      // @ts-ignore
       travelMode: 'DRIVING',
     }
 
-    // infinite loop here
-    this.directionsService.route(
+    directionsService.route(
       request, (response: google.maps.DirectionsResult, status: string) => {
         if (status === 'OK') {
           this.directionsDisplay.setDirections(response)
@@ -90,7 +94,6 @@ class Map extends Component<MyProps> {
 
   doInitMapLogic(): void {
     this.directionsDisplay = new google.maps.DirectionsRenderer()
-    this.directionsService = new google.maps.DirectionsService()
     const map = new google.maps.Map(document.getElementsByClassName('map')[0], {
       center: {
         lat: 39.956813,
