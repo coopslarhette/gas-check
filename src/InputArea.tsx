@@ -4,11 +4,13 @@ import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import InputTemplate from './InputTemplate'
 
-function InputArea(props: {
+type Props = {
   handleClick: (inputInfo: {
     origin: string; destination: string; mpg: number; gasPrice: number;
   }) => void;
-}): JSX.Element {
+}
+
+function InputArea(props: Props): JSX.Element {
   const [validators, setValidators] = useState({
     origin: false,
     destination: false,
