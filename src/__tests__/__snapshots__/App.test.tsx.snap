@@ -27,7 +27,8 @@ exports[`App component renders all parts correctly 1`] = `
           >
             <img
               alt="github page"
-              src="../public/github-logo.png"
+              className="github-logo"
+              src="github-logo.png"
             />
           </a>
         </div>
