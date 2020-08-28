@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/coopslarhette/gauge.svg?branch=master)](https://travis-ci.com/coopslarhette/gauge)
 # Gauge
 A fairly simple web app to estimate cost of gas used whilst driving from point A to B. Uses Google Maps JavaScript API to find the fastest route using current conditions and calculates the distance of that route. It then calculates the cost of trip based on how much gas it thinks the trip will use. 
 
