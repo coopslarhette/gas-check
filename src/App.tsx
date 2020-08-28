@@ -7,7 +7,7 @@ import Alert from 'react-bootstrap/Alert'
 import GaugeNavBar from './GaugeNavBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Map from './Map'
-import InputArea from './InputArea'
+import InputArea from './input/InputArea'
 
 function App() {
   const [origin, setOrigin] = useState('')
@@ -20,6 +20,7 @@ function App() {
     origin: string; destination: string; mpg: number;
     gasPrice: number;
   }): void {
+    // can probably restructure this/do some memoization here
     setOrigin(inputInfo.origin)
     setDestination(inputInfo.destination)
     setMpg(inputInfo.mpg)
