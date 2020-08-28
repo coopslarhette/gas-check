@@ -9,7 +9,7 @@ type PropTypes = {
 
 function Map({ origin, destination, handleComputeResult }: PropTypes) {
   const ref = useRef<HTMLDivElement>(null)
-  const [map, setMap] = useState<google.maps.Map<Element> | null>(null)
+  const [map, setMap] = useState<google.maps.Map | null>(null)
   const [directionsDisplay, setDirectionsDisplay] = useState<google.maps.DirectionsRenderer>()
 
   // eslint-disable-next-line consistent-return
@@ -48,6 +48,7 @@ function Map({ origin, destination, handleComputeResult }: PropTypes) {
       travelMode: 'DRIVING',
     }
 
+    // setting null and then to `map` again is workaround for bug with G Maps API
     directionsDisplay?.setMap(null)
     directionsService.route(
       request, (response: google.maps.DirectionsResult, status: string) => {
@@ -117,7 +118,6 @@ function Map({ origin, destination, handleComputeResult }: PropTypes) {
 }
 
 function shouldNotUpdate(props, nextProps) {
-  console.log('checking memo')
   const [propNames, nextPropNames] = [functions(props), functions(nextProps)]
   const noPropChange = isEqual(omit(props, propNames), omit(nextProps, nextPropNames))
   const noFuncChange = propNames.length === nextPropNames.length
@@ -126,4 +126,3 @@ function shouldNotUpdate(props, nextProps) {
 }
 
 export default React.memo(Map, shouldNotUpdate)
-
