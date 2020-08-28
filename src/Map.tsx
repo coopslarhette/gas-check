@@ -1,30 +1,19 @@
-/* global google */
 import React, { useEffect, useRef, useState } from 'react'
+import { functions, isEqual, omit } from 'lodash'
 import './Map.css'
 
-type Props = {
+type PropTypes = {
   origin: string; destination: string;
   handleComputeResult: (distance: number, duration: string) => void
 }
 
-function Map(props: Props) {
-  const ref = useRef()
-  const [map, setMap] = useState()
-  let directionsDisplay
+function Map({ origin, destination, handleComputeResult }: PropTypes) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [map, setMap] = useState<google.maps.Map<Element> | null>(null)
+  const [directionsDisplay, setDirectionsDisplay] = useState<google.maps.DirectionsRenderer>()
 
-  function doInitMapLogic(): void {
-    // map = new google.maps.Map(document.getElementsByClassName('map')[0], {
-    //   center: {
-    //     lat: 39.956813,
-    //     lng: -102.011721,
-    //   },
-    //   zoom: 3,
-    // })
-    directionsDisplay = new google.maps.DirectionsRenderer()
-    directionsDisplay.setMap(map)
-  }
-
-  function attachMapsScript(): () => void {
+  // eslint-disable-next-line consistent-return
+  function attachMapsScript(): void | (() => void) {
     const options = {
       center: {
         lat: 39.956813,
@@ -32,23 +21,26 @@ function Map(props: Props) {
       },
       zoom: 3,
     }
-    // @ts-ignore
-    const onLoad = () => setMap(new google.maps.Map(ref.current, options))
-    if (!window.google) {
+    // note: options gets modified by API, not an issue atm
+    const onLoad = () => {
+      if (ref.current) setMap(new google.maps.Map(ref.current, options))
+    }
+
+    if (window.google) {
+      onLoad()
+    } else {
       const script = document.createElement('script')
       script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg'
       document.head.append(script)
       script.addEventListener('load', onLoad)
       return () => script.removeEventListener('load', onLoad)
     }
-    onLoad()
-    return () => {
-    }
   }
+
+  useEffect(() => attachMapsScript(), [])
 
   function drawPathOnMap(): void {
     const directionsService = new google.maps.DirectionsService()
-    const { origin, destination } = props
     const request: google.maps.DirectionsRequest = {
       origin,
       destination,
@@ -56,11 +48,12 @@ function Map(props: Props) {
       travelMode: 'DRIVING',
     }
 
+    directionsDisplay?.setMap(null)
     directionsService.route(
       request, (response: google.maps.DirectionsResult, status: string) => {
         if (status === 'OK') {
-          directionsDisplay.setDirections(response)
-          directionsDisplay.setMap(map)
+          directionsDisplay?.setDirections(response)
+          directionsDisplay?.setMap(map)
         } else if (status === 'NOT_FOUND' || status === 'ZERO_RESULTS') {
           // eslint-disable-next-line no-alert
           alert('One of your addresses could not be found, please try again.')
@@ -73,7 +66,6 @@ function Map(props: Props) {
   }
 
   function callDistanceMatrix(): void {
-    const { origin, destination } = props
     const service = new google.maps.DistanceMatrixService()
     const request: google.maps.DistanceMatrixRequest = {
       origins: [origin],
@@ -85,7 +77,6 @@ function Map(props: Props) {
 
     service.getDistanceMatrix(
       request, (response: google.maps.DistanceMatrixResponse, status: string): void => {
-        const { handleComputeResult } = props
         if (status === 'OK') {
           const result = response.rows[0].elements[0]
           const distance = result.distance.value
@@ -96,32 +87,43 @@ function Map(props: Props) {
     )
   }
 
-  useEffect(() => {
-    console.log('effect1')
-    return attachMapsScript()
-  }, [])
+  // need this since we don't want to initialize any G Maps objects till script is attached
+  function useDidUpdateEffect(fn, deps) {
+    const didMountRef = useRef(false)
 
-  useEffect(() => {
-    console.log('effect2')
+    useEffect(() => {
+      if (didMountRef.current) {
+        fn()
+      } else {
+        didMountRef.current = true
+      }
+    }, deps)
+  }
+
+  useDidUpdateEffect(() => {
     callDistanceMatrix()
     drawPathOnMap()
-    // eslint-disable-next-line react/destructuring-assignment
-  }, [props.origin, props.destination])
+  }, [origin, destination])
+
+  useDidUpdateEffect(() => {
+    const d = new google.maps.DirectionsRenderer()
+    d.setMap(map)
+    setDirectionsDisplay(d)
+  }, [map])
 
   return (
-    // @ts-ignore
-    <div className="map" {...{ ref }} />
+    <div className="map" ref={ref} />
   )
 }
 
-// function shouldNotUpdate(props, nextProps) {
-//   const [propNames, nextPropNames] = [functions(props), functions(nextProps)]
-//   const noPropChange = isEqual(omit(props, propNames), omit(nextProps, nextPropNames))
-//   const noFuncChange = propNames.length === nextPropNames.length
-//     && propNames.every((p) => props[p].toString() === nextProps[p].toString())
-//   return noPropChange && noFuncChange
-// }
+function shouldNotUpdate(props, nextProps) {
+  console.log('checking memo')
+  const [propNames, nextPropNames] = [functions(props), functions(nextProps)]
+  const noPropChange = isEqual(omit(props, propNames), omit(nextProps, nextPropNames))
+  const noFuncChange = propNames.length === nextPropNames.length
+    && propNames.every((p) => props[p].toString() === nextProps[p].toString())
+  return noPropChange && noFuncChange
+}
 
-// React.memo(Map, shouldNotUpdate)
+export default React.memo(Map, shouldNotUpdate)
 
-export default Map
