@@ -2,19 +2,26 @@
 import React, { Component } from 'react'
 import './Map.css'
 
-type MyProps = {
+type PropTypes = {
   origin: string; destination: string;
   handleComputeResult: (distance: number, duration: string) => void
 }
 
-class Map extends Component<MyProps> {
-  directionsDisplay
+type StateTypes = {
+  directionsDisplay: google.maps.DirectionsRenderer | null
+}
+
+class Map extends Component<PropTypes, StateTypes> {
+  constructor(props) {
+    super(props)
+    this.state = { directionsDisplay: null }
+  }
 
   componentDidMount(): void {
     this.attachMapsScript()
   }
 
-  shouldComponentUpdate(nextProps: Readonly<MyProps>): boolean {
+  shouldComponentUpdate(nextProps: Readonly<PropTypes>): boolean {
     const { origin, destination } = this.props
     return origin !== nextProps.origin || destination !== nextProps.destination
   }
@@ -59,12 +66,13 @@ class Map extends Component<MyProps> {
       },
       zoom: 3,
     })
+    const { directionsDisplay } = this.state
 
     directionsService.route(
       request, (response: google.maps.DirectionsResult, status: string) => {
         if (status === 'OK') {
-          this.directionsDisplay.setDirections(response)
-          this.directionsDisplay.setMap(map)
+          directionsDisplay?.setDirections(response)
+          directionsDisplay?.setMap(map)
         } else if (status === 'NOT_FOUND' || status === 'ZERO_RESULTS') {
           // eslint-disable-next-line no-alert
           alert('One of your addresses could not be found, please try again.')
@@ -101,7 +109,7 @@ class Map extends Component<MyProps> {
   }
 
   doInitMapLogic(): void {
-    this.directionsDisplay = new google.maps.DirectionsRenderer()
+    this.setState({ directionsDisplay: new google.maps.DirectionsRenderer() })
     const map = new google.maps.Map(document.getElementsByClassName('map')[0], {
       center: {
         lat: 39.956813,
@@ -109,7 +117,8 @@ class Map extends Component<MyProps> {
       },
       zoom: 3,
     })
-    this.directionsDisplay.setMap(map)
+    const { directionsDisplay } = this.state
+    directionsDisplay?.setMap(map)
   }
 
   render(): JSX.Element {
