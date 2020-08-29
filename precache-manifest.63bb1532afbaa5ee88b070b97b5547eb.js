@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bc964e58fe754a927aee1611b2854d12",
+    "revision": "e3575e584cb6a73794ffa17bd818f500",
     "url": "/gauge/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gauge/static/css/2.af3c1da9.chunk.css"
   },
   {
-    "revision": "04edd00dbb428939d05e",
+    "revision": "f5fc647d17b212a485f4",
     "url": "/gauge/static/css/main.adac37a2.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gauge/static/js/2.80e707b0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "04edd00dbb428939d05e",
-    "url": "/gauge/static/js/main.f3733968.chunk.js"
+    "revision": "f5fc647d17b212a485f4",
+    "url": "/gauge/static/js/main.5323f2d9.chunk.js"
   },
   {
     "revision": "c621ea0f738567194de0",
