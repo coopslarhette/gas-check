@@ -1,5 +1,5 @@
-/* global google */
-import React, { Component } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { functions, isEqual, omit } from 'lodash'
 import './Map.css'
 
 type PropTypes = {
@@ -7,67 +7,49 @@ type PropTypes = {
   handleComputeResult: (distance: number, duration: string) => void
 }
 
-type StateTypes = {
-  directionsDisplay: google.maps.DirectionsRenderer | null
-}
+function Map({ origin, destination, handleComputeResult }: PropTypes) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [map, setMap] = useState<google.maps.Map | null>(null)
+  const [directionsDisplay, setDirectionsDisplay] = useState<google.maps.DirectionsRenderer>()
 
-class Map extends Component<PropTypes, StateTypes> {
-  constructor(props) {
-    super(props)
-    this.state = { directionsDisplay: null }
-  }
+  // eslint-disable-next-line consistent-return
+  function attachMapsScript(): void | (() => void) {
+    const options = {
+      center: {
+        lat: 39.956813,
+        lng: -102.011721,
+      },
+      zoom: 3,
+    }
+    // note: options gets modified by API, not an issue atm
+    const onLoad = () => {
+      if (ref.current) setMap(new google.maps.Map(ref.current, options))
+    }
 
-  componentDidMount(): void {
-    this.attachMapsScript()
-  }
-
-  shouldComponentUpdate(nextProps: Readonly<PropTypes>): boolean {
-    const { origin, destination } = this.props
-    return origin !== nextProps.origin || destination !== nextProps.destination
-  }
-
-  componentDidUpdate(): void {
-    this.callDistanceMatrix()
-    this.drawPathOnMap()
-  }
-
-  attachMapsScript(): void {
-    if (!window.google) {
-      const s = document.createElement('script')
-      s.type = 'text/javascript'
-      s.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg'
-      const x = document.getElementsByTagName('script')[0]
-      if (x && x.parentNode) {
-        x.parentNode.insertBefore(s, x)
-      }
-      // Below is important.
-      // We cannot access google.maps until it's finished loading
-      s.addEventListener('load', () => {
-        this.doInitMapLogic()
-      })
+    if (window.google) {
+      onLoad()
     } else {
-      this.doInitMapLogic()
+      const script = document.createElement('script')
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC1rUOvjD8PT8XlKlL6uXXaq6wl_9lIOWg'
+      document.head.append(script)
+      script.addEventListener('load', onLoad)
+      return () => script.removeEventListener('load', onLoad)
     }
   }
 
-  drawPathOnMap(): void {
+  useEffect(() => attachMapsScript(), [])
+
+  function drawPathOnMap(): void {
     const directionsService = new google.maps.DirectionsService()
-    const { origin, destination } = this.props
     const request: google.maps.DirectionsRequest = {
       origin,
       destination,
       // @ts-ignore
       travelMode: 'DRIVING',
     }
-    const map = new google.maps.Map(document.getElementsByClassName('map')[0], {
-      center: {
-        lat: 39.956813,
-        lng: -102.011721,
-      },
-      zoom: 3,
-    })
-    const { directionsDisplay } = this.state
 
+    // setting null and then to `map` again is workaround for bug with G Maps API
+    directionsDisplay?.setMap(null)
     directionsService.route(
       request, (response: google.maps.DirectionsResult, status: string) => {
         if (status === 'OK') {
@@ -84,8 +66,7 @@ class Map extends Component<PropTypes, StateTypes> {
     )
   }
 
-  callDistanceMatrix(): void {
-    const { origin, destination } = this.props
+  function callDistanceMatrix(): void {
     const service = new google.maps.DistanceMatrixService()
     const request: google.maps.DistanceMatrixRequest = {
       origins: [origin],
@@ -97,7 +78,6 @@ class Map extends Component<PropTypes, StateTypes> {
 
     service.getDistanceMatrix(
       request, (response: google.maps.DistanceMatrixResponse, status: string): void => {
-        const { handleComputeResult } = this.props
         if (status === 'OK') {
           const result = response.rows[0].elements[0]
           const distance = result.distance.value
@@ -108,24 +88,41 @@ class Map extends Component<PropTypes, StateTypes> {
     )
   }
 
-  doInitMapLogic(): void {
-    this.setState({ directionsDisplay: new google.maps.DirectionsRenderer() })
-    const map = new google.maps.Map(document.getElementsByClassName('map')[0], {
-      center: {
-        lat: 39.956813,
-        lng: -102.011721,
-      },
-      zoom: 3,
-    })
-    const { directionsDisplay } = this.state
-    directionsDisplay?.setMap(map)
+  // need this since we don't want to initialize any G Maps objects till script is attached
+  function useDidUpdateEffect(fn, deps) {
+    const didMountRef = useRef(false)
+
+    useEffect(() => {
+      if (didMountRef.current) {
+        fn()
+      } else {
+        didMountRef.current = true
+      }
+    }, deps)
   }
 
-  render(): JSX.Element {
-    return (
-      <div className="map" />
-    )
-  }
+  useDidUpdateEffect(() => {
+    callDistanceMatrix()
+    drawPathOnMap()
+  }, [origin, destination])
+
+  useDidUpdateEffect(() => {
+    const d = new google.maps.DirectionsRenderer()
+    d.setMap(map)
+    setDirectionsDisplay(d)
+  }, [map])
+
+  return (
+    <div className="map" ref={ref} />
+  )
 }
 
-export default Map
+function shouldNotUpdate(props, nextProps) {
+  const [propNames, nextPropNames] = [functions(props), functions(nextProps)]
+  const noPropChange = isEqual(omit(props, propNames), omit(nextProps, nextPropNames))
+  const noFuncChange = propNames.length === nextPropNames.length
+    && propNames.every((p) => props[p].toString() === nextProps[p].toString())
+  return noPropChange && noFuncChange
+}
+
+export default React.memo(Map, shouldNotUpdate)

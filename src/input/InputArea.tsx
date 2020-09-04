@@ -4,13 +4,13 @@ import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import InputTemplate from './InputTemplate'
 
-type Props = {
+type PropTypes = {
   handleClick: (inputInfo: {
     origin: string; destination: string; mpg: number; gasPrice: number;
   }) => void;
 }
 
-function InputArea(props: Props): JSX.Element {
+function InputArea({ handleClick }: PropTypes): JSX.Element {
   const [validators, setValidators] = useState({
     origin: false,
     destination: false,
@@ -87,7 +87,7 @@ function InputArea(props: Props): JSX.Element {
         ref={(ref): void => {
           buttonNodeRef = ref
         }}
-        onClick={(): void => props.handleClick(inputValues)}
+        onClick={(): void => handleClick(inputValues)}
       >
         Compute Cost!
       </Button>

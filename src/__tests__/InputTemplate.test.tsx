@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM, { unmountComponentAtNode } from 'react-dom'
 import renderer from 'react-test-renderer'
 import { render } from '@testing-library/react'
-import InputTemplate from '../InputTemplate'
+import InputTemplate from '../input/InputTemplate'
 
 describe('Input template component', () => {
   let validateChange: (formIdentifier: string, isValid: boolean) => void
