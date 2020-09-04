@@ -17,8 +17,7 @@ function App() {
   const [resultComponent, setResultComponent] = useState((<div />))
 
   function handleComputeRequest(inputInfo: {
-    origin: string; destination: string; mpg: number;
-    gasPrice: number;
+    origin: string; destination: string; mpg: number; gasPrice: number;
   }): void {
     // can probably restructure this/do some memoization here
     setOrigin(inputInfo.origin)
