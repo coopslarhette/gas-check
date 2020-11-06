@@ -3,11 +3,16 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import './InputTemplate.css'
 
-function InputTemplate(props: {
-  placeholder: string; prepend: string; validationRegex: RegExp;
-  formIdentifier: string; validateChange: (formIdentifier: string, isValid: boolean) => void;
-  storeInputValue: (formValue: string, formIdentifier: string) => void;
-}): JSX.Element {
+type Props = {
+  placeholder: string
+  prepend: string
+  validationRegex: RegExp
+  formIdentifier: string
+  validateChange: (formIdentifier: string, isValid: boolean) => void
+  storeInputValue: (formValue: string, formIdentifier: string) => void
+}
+
+function InputTemplate(props: Props): JSX.Element {
   const {
     placeholder, prepend, validationRegex, formIdentifier,
   } = props
